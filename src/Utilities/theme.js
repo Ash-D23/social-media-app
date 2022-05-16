@@ -15,6 +15,7 @@ export const getDesignTokens = (mode) => ({
           // palette values for dark mode
           secondary: {
             main: '#121212',
+            dark: '#f1f5f9'
           },
           text: {
             secondary: '#fff',

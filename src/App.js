@@ -8,12 +8,12 @@ import { getDesignTokens } from "./Utilities/theme";
 import { useState } from "react";
 
 function App() {
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState("dark");
   const darkTheme = createTheme(getDesignTokens(mode))
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Box>
+      <Box bgcolor={"background.default"} color={"text.primary"}>
         <Navbar />
         
         <Routes>
