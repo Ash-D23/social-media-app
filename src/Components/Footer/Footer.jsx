@@ -1,7 +1,7 @@
 import { Facebook, GitHub, Twitter } from '@mui/icons-material'
 import { Box, Link, Typography } from '@mui/material'
 import React from 'react'
-import { FlexCenterBox } from '../../Utilities/GlobalStyles/GlobalStyles'
+import { FlexCenterBox } from '../../Utilities'
 import { FooterContainer } from './styles'
 
 function Footer() {

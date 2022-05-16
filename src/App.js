@@ -4,7 +4,7 @@ import {Home, Login, SignUp, Logout, NotFound} from './Pages'
 import Mockman from "mockman-js";
 import "./App.css";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
-import { getDesignTokens } from "./Utilities/theme";
+import { getDesignTokens } from "./Utilities"
 import { useState } from "react";
 
 function App() {
