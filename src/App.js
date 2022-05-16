@@ -8,7 +8,7 @@ import { getDesignTokens } from "./Utilities/theme";
 import { useState } from "react";
 
 function App() {
-  const [mode, setMode] = useState("dark");
+  const [mode, setMode] = useState("light");
   const darkTheme = createTheme(getDesignTokens(mode))
 
   return (
