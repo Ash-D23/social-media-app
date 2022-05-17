@@ -3,29 +3,37 @@ import {Navbar, Footer} from './Components'
 import {Home, Login, SignUp, Logout, NotFound} from './Pages'
 import Mockman from "mockman-js";
 import "./App.css";
+import { Box, createTheme, ThemeProvider } from "@mui/material";
+import { getDesignTokens } from "./Utilities"
+import { useState } from "react";
 
 function App() {
+  const [mode, setMode] = useState("dark");
+  const darkTheme = createTheme(getDesignTokens(mode))
+
   return (
-    <div>
+    <ThemeProvider theme={darkTheme}>
+      <Box bgcolor={"background.default"} color={"text.primary"}>
+        <Navbar />
+        
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-      <Navbar />
-      
-      <Routes>
-        <Route path="/" element={<Home />} />
+          <Route path='/login' element={<Login />} />
 
-        <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
 
-        <Route path='/signup' element={<SignUp />} />
+          <Route path='/logout' element={<Logout />} />
 
-        <Route path='/logout' element={<Logout />} />
+          <Route path="/testApi" element={<Mockman />} />
 
-        <Route path="/testApi" element={<Mockman />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-
-      <Footer />
-    </div>
+        <Footer />
+      </Box>
+    </ThemeProvider>
+    
   );
 }
 
