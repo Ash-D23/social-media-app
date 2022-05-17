@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, TextField, Typography } from '@mui/material'
-import { AuthContent, FlexCenterBox } from '../../Utilities'
+import { AuthContent, FlexCenterBox, LinkStyle } from '../../Utilities'
+import { Link } from 'react-router-dom'
 
 function SignUp() {
   return (
@@ -18,7 +19,7 @@ function SignUp() {
 
         <Button variant="contained" sx={{ marginTop: '1rem'}}>Sign Up</Button>
 
-        <Typography m={2} variant='p' align="center">Already have an Account ?</Typography>
+        <Typography m={2} variant='p' align="center"><Link style={LinkStyle} to="/login">Already have an Account?</Link></Typography>
       </AuthContent>
     </FlexCenterBox>
   )

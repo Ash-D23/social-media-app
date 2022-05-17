@@ -6,6 +6,7 @@ import { getDesignTokens } from "./Utilities"
 import Mockman from "mockman-js";
 import "./App.css";
 import { useLocalStorage } from "./hooks/LocalStorage";
+import RequireAuth from './hooks/RequireAuth'
 import { useAuthContext } from "./Context";
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
 
         { user ? <Route path="/" element={<Navigate to={"/main"} />} /> : <Route path="/" element={<Home />} /> }
 
-        <Route path='/main' element={<Main setMode={setMode} mode={mode} />} >
+        <Route path='/main' element={<RequireAuth><Main setMode={setMode} mode={mode} /></RequireAuth>} >
           <Route path='' element={<Dashboard />} />
           <Route path='explore' element={<Explore />} />
           <Route path='notifications' element={<Notifications/>} />

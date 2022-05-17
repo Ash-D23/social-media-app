@@ -18,3 +18,7 @@ export const AuthContent = styled(Box)({
     display: 'flex',
     flexDirection: 'column'
 })
+
+export const LinkStyle = {
+    color: 'inherit'
+}

@@ -2,9 +2,11 @@ import { AppBar, Autocomplete, Avatar, MenuItem, TextField, Typography } from '@
 import { TravelExplore } from '@mui/icons-material'
 import {useState}from 'react'
 import { NavContainer, NavMenu, SearchBar, UserBox } from './styles'
+import { useAuthContext } from '../../Context';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const {user} = useAuthContext()
 
   return (
     <AppBar position="sticky">
@@ -14,6 +16,7 @@ function Navbar() {
           </Typography>
           <TravelExplore fontSize="large" sx={{ display: { xs: "block", sm: "none" } }} />
 
+         { user ? <>
           <SearchBar>
             <Autocomplete
                   freeSolo
@@ -46,6 +49,7 @@ function Navbar() {
             />
             <Typography variant="span">John</Typography>
           </UserBox>
+          </> :  null }
       </NavContainer>
       <NavMenu
           id="navbar-positioned-menu"

@@ -1,7 +1,8 @@
 import { Button, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useAuthContext } from '../../Context'
-import { AuthContent, FlexCenterBox, FlexSpaceBetweenBox } from '../../Utilities'
+import { AuthContent, FlexCenterBox, FlexSpaceBetweenBox, LinkStyle } from '../../Utilities'
 
 function Login() {
 
@@ -28,7 +29,7 @@ function Login() {
         <Button variant="contained" sx={{ marginTop: '1rem'}}>Login</Button>
         <Button onClick={() => signIn({ username: 'adarshbalika', password: 'adarshBalika123'})} variant="contained" sx={{ marginTop: '1rem'}}>Login with Test Credentials</Button>
 
-        <Typography m={2} variant='p' align="center">Create New Account</Typography>
+        <Typography m={2} variant='p' align="center"><Link style={LinkStyle} to="/signup">Create New Account</Link></Typography>
       </AuthContent>
     </FlexCenterBox>
   )
