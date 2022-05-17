@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import React, {useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../Context'
-import { FlexCenterBox } from '../../Utilities'
+import { FlexCenterBox, LinkStylePlain } from '../../Utilities'
 
 function Logout() {
   const {user, signOut} = useAuthContext()
@@ -24,7 +24,7 @@ function Logout() {
           User has Succesfully Logged Out
         </Typography>
         <FlexCenterBox m={1}>
-          <Link to="/"><Button variant="contained">
+          <Link style={LinkStylePlain} to="/"><Button variant="contained">
             Go To Home
           </Button></Link>
         </FlexCenterBox>

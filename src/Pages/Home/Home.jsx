@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LinkStyle } from '../../Utilities';
+import { LinkStyle, LinkStylePlain } from '../../Utilities';
 import {AboutContainer, StyledPara} from './styles'
 
 function Home() {
@@ -52,7 +52,7 @@ function Home() {
                 },
                 marginTop: '1rem'
               }}>
-                <Link to="/signup"><Button sx={{width: '100%'}} variant="contained">Join Now</Button></Link>
+                <Link style={LinkStylePlain} to="/signup"><Button sx={{width: '100%'}} variant="contained">Join Now</Button></Link>
                 <Link style={LinkStyle} to="/login"><Typography m={1} align="center">
                   Already have an account?
                 </Typography></Link>
