@@ -1,6 +1,7 @@
 import { InsertPhoto, Mood } from '@mui/icons-material'
 import { Box, Button, Stack, TextField } from '@mui/material'
 import React from 'react'
+import { FlexSpaceBetweenBox } from '../../Utilities'
 
 function NewPost() {
   return (
@@ -15,7 +16,7 @@ function NewPost() {
           sm:3, 
         },
         backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))`
-        }}>
+    }}>
         <TextField
             placeholder="Write Something Interesting"
             multiline
@@ -23,7 +24,7 @@ function NewPost() {
             maxRows={4}
             sx={{ width: '100%'}}
         />
-        <Box mt={1} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <FlexSpaceBetweenBox mt={1}>
           <Stack direction="row" spacing={2}>
             <InsertPhoto />
             <Mood />
@@ -31,7 +32,7 @@ function NewPost() {
           <Button variant="contained">
             Post
           </Button>
-        </Box>
+        </FlexSpaceBetweenBox>
     </Box>
   )
 }

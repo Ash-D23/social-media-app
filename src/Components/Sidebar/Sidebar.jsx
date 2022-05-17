@@ -25,7 +25,7 @@ function Sidebar({ setMode, mode}) {
       <Box position="fixed">
         <List>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#home">
+            <ListItemButton>
               <ListItemIcon>
                 <Home />
               </ListItemIcon>
@@ -33,7 +33,7 @@ function Sidebar({ setMode, mode}) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton>
               <ListItemIcon>
                 <Rocket />
               </ListItemIcon>
@@ -41,7 +41,7 @@ function Sidebar({ setMode, mode}) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton>
               <ListItemIcon>
                 <BookmarkBorderOutlined />
               </ListItemIcon>
@@ -49,7 +49,7 @@ function Sidebar({ setMode, mode}) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton>
               <ListItemIcon>
                 <Notifications />
               </ListItemIcon>
@@ -57,7 +57,7 @@ function Sidebar({ setMode, mode}) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton>
               <ListItemIcon>
                 <Person />
               </ListItemIcon>
@@ -65,14 +65,14 @@ function Sidebar({ setMode, mode}) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton>
               <ListItemIcon>
                 { mode === "dark" ?  <ModeNight /> : <LightMode /> }
               </ListItemIcon>
               <Switch onChange={e=>setMode(mode === "light" ? "dark" : "light")} />
             </ListItemButton>
           </ListItem>
-          <ListItem sx={{display: 'flex', justifyContent: 'center', marginTop: '1rem'}}disablePadding>
+          <ListItem sx={{display: 'flex', justifyContent: 'center', marginTop: '1rem'}} disablePadding>
               <Button variant="contained">Create Post</Button>
           </ListItem>
         </List>

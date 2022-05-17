@@ -6,3 +6,9 @@ export const FlexCenterBox = styled(Box)({
     justifyContent: 'center',
     alignItems: 'center'
 });
+
+export const FlexSpaceBetweenBox = styled(Box)({ 
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+});

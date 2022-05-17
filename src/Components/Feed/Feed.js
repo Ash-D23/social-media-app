@@ -15,12 +15,10 @@ function Feed() {
         </Stack>
     ) : (
         <>
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
         </>
     )
 }
