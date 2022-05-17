@@ -8,15 +8,14 @@ function Login() {
   const { signIn } = useAuthContext()
 
   return (
-    <FlexCenterBox sx={{
-      backgroundColor: '#e2e8f0',
+    <FlexCenterBox bgcolor={"secondary.ascent"} sx={{
       minHeight: '80vh'
     }}>
       <AuthContent bgcolor={"background.default"}  p={2}>
         <Typography m={2} variant='h4' align="center">Login</Typography>
 
-        <TextField margin="normal" id="outlined-basic" label="Email" variant="outlined" />
-        <TextField margin="normal" id="outlined-basic" type="password" label="Password" variant="outlined" />
+        <TextField margin="normal" label="Email" variant="outlined" />
+        <TextField margin="normal" type="password" label="Password" variant="outlined" />
 
         <FlexSpaceBetweenBox m={1}>
           <FormControlLabel control={<Checkbox defaultChecked />} label="Remember Me" />
