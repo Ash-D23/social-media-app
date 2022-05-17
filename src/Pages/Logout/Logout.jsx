@@ -1,9 +1,22 @@
 import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import React from 'react'
+import React, {useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../../Context'
 import { FlexCenterBox } from '../../Utilities'
 
 function Logout() {
+  const {user, signOut} = useAuthContext()
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!user){
+      navigate("/")
+    }
+    signOut()
+  }, [])
+
   return (
     <FlexCenterBox sx={{ height: '80vh'}}>
       <Box>
@@ -11,9 +24,9 @@ function Logout() {
           User has Succesfully Logged Out
         </Typography>
         <FlexCenterBox m={1}>
-          <Button variant="contained">
+          <Link to="/"><Button variant="contained">
             Go To Home
-          </Button>
+          </Button></Link>
         </FlexCenterBox>
       </Box>
     </FlexCenterBox>

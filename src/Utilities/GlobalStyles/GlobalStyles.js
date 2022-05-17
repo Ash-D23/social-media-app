@@ -22,3 +22,8 @@ export const AuthContent = styled(Box)({
 export const LinkStyle = {
     color: 'inherit'
 }
+
+export const LinkStylePlain = {
+    color: 'inherit',
+    textDecoration: 'none'
+}

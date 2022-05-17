@@ -3,6 +3,8 @@ import { TravelExplore } from '@mui/icons-material'
 import {useState}from 'react'
 import { NavContainer, NavMenu, SearchBar, UserBox } from './styles'
 import { useAuthContext } from '../../Context';
+import { Link } from 'react-router-dom';
+import { LinkStylePlain } from '../../Utilities';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -66,7 +68,7 @@ function Navbar() {
           }}
         >
           <MenuItem>Profile</MenuItem>
-          <MenuItem onClick={(e) => setOpen(false)}>Logout</MenuItem>
+          <MenuItem onClick={(e) => setOpen(false)}><Link style={LinkStylePlain} to="/logout">Logout</Link></MenuItem>
       </NavMenu>
     </AppBar>
   )
