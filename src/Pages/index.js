@@ -7,4 +7,5 @@ export {Profile} from './Profile/Profile';
 export {NotFound} from './NotFound/NotFound';
 export {Explore} from './Explore/Explore';
 export {Notifications} from './Notifications/Notifications';
-export {Bookmarks} from './Bookmarks/Bookmarks'
+export {Bookmarks} from './Bookmarks/Bookmarks';
+export {Main} from './Main/Main';
