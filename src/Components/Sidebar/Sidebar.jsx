@@ -19,7 +19,7 @@ import {
   Switch,
 } from "@mui/material";
 
-function Sidebar({ setMode, mode}) {
+function Sidebar({ setMode, mode, handleModalOpen}) {
   return (
     <Box flex={1} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
       <Box position="fixed">
@@ -73,7 +73,7 @@ function Sidebar({ setMode, mode}) {
             </ListItemButton>
           </ListItem>
           <ListItem sx={{display: 'flex', justifyContent: 'center', marginTop: '1rem'}} disablePadding>
-              <Button variant="contained">Create Post</Button>
+              <Button onClick={handleModalOpen} variant="contained">Create Post</Button>
           </ListItem>
         </List>
       </Box>

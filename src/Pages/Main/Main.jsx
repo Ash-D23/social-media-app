@@ -1,17 +1,19 @@
-import { BookmarkOutlined, Home, Notifications, Rocket } from '@mui/icons-material';
-import { BottomNavigation, BottomNavigationAction, Box, Paper, Stack } from '@mui/material';
+import { Add, BookmarkOutlined, Home, Notifications, Rocket } from '@mui/icons-material';
+import { BottomNavigation, BottomNavigationAction, Box, Fab, Stack } from '@mui/material';
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom';
 import { CreatePostModal, Rightbar, Sidebar } from '../../Components';
-import { BottomNavContainer } from './styles';
+import { BottomNavContainer, FloaterButton } from './styles';
 
-function Main({ setMode, mode}) {
+function Main({ setMode, mode }) {
 
   const [value, setValue] = useState(0)
+  
+  const [ModalOpen, setModalOpen] = useState(false);
 
   return (
     <Stack direction="row" spacing={{ xs: 0, md: 2}} justifyContent="space-between">
-        <Sidebar setMode={setMode} mode={mode} />
+        <Sidebar setMode={setMode} mode={mode} handleModalOpen={()=>setModalOpen(true)} />
         <Box flex={4} p={{ xs: 0, md: 2 }}>
           <Outlet />
         </Box>
@@ -30,7 +32,12 @@ function Main({ setMode, mode}) {
               <BottomNavigationAction label="Notifications" icon={<Notifications />} />
             </BottomNavigation>
         </BottomNavContainer>
-        {/* <CreatePostModal /> */}
+        <FloaterButton onClick={(e) => setModalOpen(true)} >
+            <Fab color="primary" aria-label="add">
+              <Add fontSize='large' sx={{margin: '10px'}}/>
+            </Fab>
+        </FloaterButton>
+        <CreatePostModal open={ModalOpen} handleClose={()=>setModalOpen(false)} />
     </Stack>
   )
 }
