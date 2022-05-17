@@ -28,7 +28,10 @@ function Post() {
   };
 
   return (
-    <Card sx={{ margin: 5 }}>
+    <Card sx={{ margin: {
+        xs: 1,
+        sm: 4
+    } }}>
         <CardHeader
             avatar={
                 <Avatar

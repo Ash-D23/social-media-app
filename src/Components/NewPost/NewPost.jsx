@@ -6,9 +6,15 @@ function NewPost() {
   return (
     <Box p={2} sx={{  
         marginTop: 1,
-        marginLeft: 3, 
-        marginRight: 3,
-        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))` 
+        marginLeft: {
+          xs:1,
+          sm:3, 
+        },
+        marginRight: {
+          xs:1,
+          sm:3, 
+        },
+        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))`
         }}>
         <TextField
             placeholder="Write Something Interesting"
