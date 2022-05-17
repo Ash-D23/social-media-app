@@ -1,2 +1,5 @@
 export {Navbar} from './Navbar/Navbar'
 export {Footer} from './Footer/Footer'
+export {Sidebar} from './Sidebar/Sidebar'
+export {Rightbar} from './Rightbar/Rightbar'
+export {CreatePostModal} from './CreatePostModal/CreatePostModal'

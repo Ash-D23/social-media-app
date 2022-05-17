@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import {Navbar, Footer} from './Components'
-import {Home, Login, SignUp, Logout, NotFound} from './Pages'
+import {Home, Login, SignUp, Logout, NotFound, Dashboard, Main, Explore, Notifications, Bookmarks, Profile} from './Pages'
 import Mockman from "mockman-js";
 import "./App.css";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
@@ -18,6 +18,14 @@ function App() {
         
         <Routes>
           <Route path="/" element={<Home />} />
+
+          <Route path='/main' element={<Main setMode={setMode} mode={mode} />} >
+            <Route path='' element={<Dashboard />} />
+            <Route path='explore' element={<Explore />} />
+            <Route path='notifications' element={<Notifications />} />
+            <Route path='bookmarks' element={<Bookmarks />} />
+            <Route path='profile' element={<Profile />} />
+          </Route> 
 
           <Route path='/login' element={<Login />} />
 
