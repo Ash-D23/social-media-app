@@ -1,47 +1,55 @@
-import { Route, Routes } from "react-router-dom";
-import {Navbar, Footer} from './Components'
-import {Home, Login, SignUp, Logout, NotFound, Dashboard, Main, Explore, Notifications, Bookmarks, Profile} from './Pages'
-import Mockman from "mockman-js";
-import "./App.css";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navbar, Footer } from './Components'
+import { Home, Login, SignUp, Logout, NotFound, Dashboard, Main, Explore, Notifications, Bookmarks, Profile } from './Pages'
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { getDesignTokens } from "./Utilities"
-import { useState } from "react";
+import Mockman from "mockman-js";
+import "./App.css";
+import { useLocalStorage } from "./hooks/LocalStorage";
+import { useAuthContext } from "./Context";
 
 function App() {
-  const [mode, setMode] = useState("dark");
+
+  const [mode, setMode] = useLocalStorage("theme", "dark");
+
+  const {user} = useAuthContext()
+
   const darkTheme = createTheme(getDesignTokens(mode))
+
+  const location = useLocation()
+
+  const pathName = location.state?.from || '/'
 
   return (
     <ThemeProvider theme={darkTheme}>
       <Box bgcolor={"background.default"} color={"text.primary"}>
         <Navbar />
-        
         <Routes>
-          <Route path="/" element={<Home />} />
 
-          <Route path='/main' element={<Main setMode={setMode} mode={mode} />} >
-            <Route path='' element={<Dashboard />} />
-            <Route path='explore' element={<Explore />} />
-            <Route path='notifications' element={<Notifications />} />
-            <Route path='bookmarks' element={<Bookmarks />} />
-            <Route path='profile' element={<Profile />} />
-          </Route> 
+        { user ? <Route path="/" element={<Navigate to={"/main"} />} /> : <Route path="/" element={<Home />} /> }
 
-          <Route path='/login' element={<Login />} />
+        <Route path='/main' element={<Main setMode={setMode} mode={mode} />} >
+          <Route path='' element={<Dashboard />} />
+          <Route path='explore' element={<Explore />} />
+          <Route path='notifications' element={<Notifications/>} />
+          <Route path='bookmarks' element={<Bookmarks />} />
+          <Route path='profile' element={<Profile />} />
+        </Route>        
 
-          <Route path='/signup' element={<SignUp />} />
+        { user ? <Route path='/login' element={<Navigate to={pathName} />} /> : <Route path='/login' element={<Login />} /> }
+    
+        { user ? <Route path='/signup' element={<Navigate to="/" />} /> : <Route path='/signup' element={<SignUp />} /> }
+      
+        <Route path='/logout' element={<Logout />} />
 
-          <Route path='/logout' element={<Logout />} />
+        <Route path="/testApi" element={<Mockman />} />
 
-          <Route path="/testApi" element={<Mockman />} />
+        <Route path="*" element={<NotFound />} />
 
-          <Route path="*" element={<NotFound />} />
         </Routes>
-
         <Footer />
       </Box>
     </ThemeProvider>
-    
   );
 }
 

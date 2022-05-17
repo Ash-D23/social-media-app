@@ -12,3 +12,9 @@ export const FlexSpaceBetweenBox = styled(Box)({
     justifyContent: 'space-between',
     alignItems: 'center'
 });
+
+export const AuthContent = styled(Box)({
+    width: '30rem',
+    display: 'flex',
+    flexDirection: 'column'
+})
