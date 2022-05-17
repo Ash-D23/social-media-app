@@ -8,7 +8,7 @@ export const getDesignTokens = (mode) => ({
             main: '#1976d2',
           },
           text: {
-            secondary: '#fff',
+            ascent: '#fff',
           }
         }
       : {
@@ -18,7 +18,7 @@ export const getDesignTokens = (mode) => ({
             dark: '#f1f5f9'
           },
           text: {
-            secondary: '#fff',
+            ascent: '#fff',
           }
         }),
   },

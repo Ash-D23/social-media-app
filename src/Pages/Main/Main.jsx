@@ -30,7 +30,7 @@ function Main({ setMode, mode}) {
               <BottomNavigationAction label="Notifications" icon={<Notifications />} />
             </BottomNavigation>
         </BottomNavContainer>
-        <CreatePostModal />
+        {/* <CreatePostModal /> */}
     </Stack>
   )
 }

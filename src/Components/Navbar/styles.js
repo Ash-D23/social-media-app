@@ -9,7 +9,7 @@ export const SearchBar = styled("div")(({ theme }) => ({
     backgroundColor: "#fff",
     padding: "0",
     borderRadius: theme.shape.borderRadius,
-    width: "40%",
+    width: "30%",
     display: 'flex',
     alignItems: 'center'
 }));
