@@ -15,7 +15,6 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
   Switch,
 } from "@mui/material";
 import { SidebarItem } from '../SidebarItem/SidebarItem';

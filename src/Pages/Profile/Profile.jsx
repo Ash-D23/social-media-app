@@ -11,7 +11,7 @@ function Profile() {
       <ProfileContainer>
           <Box sx={{ height: '14rem'}}>
             <Box position="relative">
-              <img style={ImgStyles}src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1196&q=80" />
+              <img style={ImgStyles}src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1196&q=80" alt="cover" />
               <Avatar src="https://material-ui.com/static/images/avatar/1.jpg" sx={AvatarStyles}/>
             </Box>
             <Box m={2} sx={{ display: 'flex', justifyContent: 'flex-end'}}>
