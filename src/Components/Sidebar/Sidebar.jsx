@@ -15,55 +15,20 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
   Switch,
 } from "@mui/material";
+import { SidebarItem } from '../SidebarItem/SidebarItem';
 
 function Sidebar({ setMode, mode, handleModalOpen}) {
   return (
     <Box flex={1} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
       <Box position="fixed">
         <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Home />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Rocket />
-              </ListItemIcon>
-              <ListItemText primary="Explore" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <BookmarkBorderOutlined />
-              </ListItemIcon>
-              <ListItemText primary="Bookmarks" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Notifications />
-              </ListItemIcon>
-              <ListItemText primary="Notifications" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Person />
-              </ListItemIcon>
-              <ListItemText primary="Profile" />
-            </ListItemButton>
-          </ListItem>
+          <SidebarItem  Icon={<Home />} path={"/main"} text={"Home"} />
+          <SidebarItem  Icon={<Rocket />} path={"/main/explore"} text={"Explore"} />
+          <SidebarItem  Icon={<BookmarkBorderOutlined />} path={"/main/bookmarks"} text={"Bookmarks"} />
+          <SidebarItem  Icon={<Notifications />} path={"/main/notifications"} text={"Notifications"} />
+          <SidebarItem  Icon={<Person />} path={"/main/profile"} text={"Profile"} />
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>

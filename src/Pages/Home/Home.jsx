@@ -47,8 +47,8 @@ function Home() {
             <Box p={3} sx={{ height: '30%'}}>
               <Box sx={{ 
                 width: {
-                xs: '100%',
-                sm: '65%'
+                  xs: '100%',
+                  sm: '65%'
                 },
                 marginTop: '1rem'
               }}>

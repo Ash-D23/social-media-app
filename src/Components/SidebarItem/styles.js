@@ -1,0 +1,1 @@
+export const SidebarLinkStyle = {color: 'inherit',textDecoration: 'none', width: '100%'}
