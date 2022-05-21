@@ -4,19 +4,21 @@ import { Feed, EditProfileModal } from '../../Components'
 import { AvatarStyles, ImgStyles, ProfileContainer } from './styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchProfile, fetchUserPosts } from '../../redux/features/Profile/ProfileSlice'
+import { useParams } from 'react-router-dom'
 
 function Profile() {
   const [open, setopen] = useState(false)
   const dispatch = useDispatch()
 
   const {user, profile} = useSelector(state => state)
-
-  console.log(profile)
+  const params = useParams()
 
   useEffect(()=>{
-    dispatch(fetchProfile('0af3d380-4d9e-4b80-88af-b0a59483de42', user.token))
-    dispatch(fetchUserPosts('0af3d380-4d9e-4b80-88af-b0a59483de42', user.token))
+    dispatch(fetchProfile(params.id, user.token))
+    dispatch(fetchUserPosts(params.id, user.token))
   }, [])
+
+  const UserDetails = profile?.profile?.user
 
   return (
     <>
@@ -32,8 +34,8 @@ function Profile() {
           </Box>
           <Box ml={3} pb={2}>
             <Box >
-              <Typography variant="h6">Full Name</Typography>
-              <Typography variant="p">@UserName</Typography>
+              <Typography variant="h6">{UserDetails?.firstName}</Typography>
+              <Typography variant="p">{`@${UserDetails.username}`}</Typography>
             </Box>
             <Box mt={2}>
               <Typography variant="p">Bio</Typography>
@@ -44,7 +46,7 @@ function Profile() {
             </Stack>
           </Box>
       </ProfileContainer>
-      <Feed />
+      <Feed posts={profile.userPosts} />
       <EditProfileModal open={open} setopen={setopen} />
     </>
   )

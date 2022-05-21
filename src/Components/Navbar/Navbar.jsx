@@ -1,6 +1,6 @@
 import { AppBar, Autocomplete, Avatar, MenuItem, TextField, Typography } from '@mui/material'
 import { TravelExplore } from '@mui/icons-material'
-import {useState}from 'react'
+import {useState} from 'react'
 import { NavContainer, NavMenu, SearchBar, UserBox } from './styles'
 import { Link } from 'react-router-dom';
 import { LinkStylePlain } from '../../Utilities';

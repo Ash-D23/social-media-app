@@ -5,7 +5,7 @@ import { fetchPosts } from '../../redux/features/Posts/PostsSlice'
 
 function Dashboard() {
 
-  const posts = useSelector(state => state.posts)
+  const { posts } = useSelector(state => state.posts)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -17,7 +17,7 @@ function Dashboard() {
   return (
     <>
       <NewPost />
-      <Feed />
+      <Feed posts={posts.posts} />
     </>
   )
 }

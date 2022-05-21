@@ -23,7 +23,7 @@ export const fetchUserPosts= createAsyncThunk('posts/fetchUserPosts', (id, token
         authorization: token,
       }
     })
-    .then(response => response.data)
+    .then(response => response.data.posts)
 })
 
 const ProfileSlice = createSlice({
