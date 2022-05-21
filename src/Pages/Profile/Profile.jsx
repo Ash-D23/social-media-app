@@ -35,7 +35,7 @@ function Profile() {
           <Box ml={3} pb={2}>
             <Box >
               <Typography variant="h6">{UserDetails?.firstName}</Typography>
-              <Typography variant="p">{`@${UserDetails.username}`}</Typography>
+              <Typography variant="p">{`@${UserDetails?.username}`}</Typography>
             </Box>
             <Box mt={2}>
               <Typography variant="p">Bio</Typography>
