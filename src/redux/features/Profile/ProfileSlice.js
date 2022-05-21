@@ -6,23 +6,15 @@ const initialState = {
   userPosts: []
 }
 
-export const fetchProfile= createAsyncThunk('posts/fetchProfile', (id, token) => {
+export const fetchProfile= createAsyncThunk('posts/fetchProfile', (id) => {
   return axios
-    .get('/api/users/'+id, {
-      headers: {
-        authorization: token,
-      }
-    })
+    .get('/api/users/'+id)
     .then(response => response.data)
 })
 
-export const fetchUserPosts= createAsyncThunk('posts/fetchUserPosts', (id, token) => {
+export const fetchUserPosts= createAsyncThunk('posts/fetchUserPosts', (id) => {
   return axios
-    .get('/api/posts/user/'+id, {
-      headers: {
-        authorization: token,
-      }
-    })
+    .get('/api/posts/user/'+id)
     .then(response => response.data.posts)
 })
 

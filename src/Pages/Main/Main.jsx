@@ -32,7 +32,7 @@ function Main({ setMode, mode }) {
               <BottomNavigationAction label="Notifications" icon={<Notifications />} />
             </BottomNavigation>
         </BottomNavContainer>
-        <FloaterButton onClick={(e) => setModalOpen(true)} >
+        <FloaterButton title={'add post'} onClick={(e) => setModalOpen(true)} >
             <Fab color="primary" aria-label="add">
               <Add fontSize='large' sx={{margin: '10px'}}/>
             </Fab>

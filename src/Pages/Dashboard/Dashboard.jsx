@@ -12,7 +12,6 @@ function Dashboard() {
     dispatch(fetchPosts())
   }, [])
 
-
   return (
     <>
       <NewPost />

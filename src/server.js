@@ -116,6 +116,8 @@ export function makeServer({ environment = "development" } = {}) {
         "/users/unfollow/:followUserId/",
         unfollowUserHandler.bind(this)
       );
+
+      this.passthrough('https://firebasestorage.googleapis.com/**');
     },
   });
 }

@@ -14,8 +14,8 @@ function Profile() {
   const params = useParams()
 
   useEffect(()=>{
-    dispatch(fetchProfile(params.id, user.token))
-    dispatch(fetchUserPosts(params.id, user.token))
+    dispatch(fetchProfile(params.id))
+    dispatch(fetchUserPosts(params.id))
   }, [])
 
   const UserDetails = profile?.profile?.user

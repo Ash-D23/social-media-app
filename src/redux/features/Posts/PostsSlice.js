@@ -11,6 +11,26 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', () => {
     .then(response => response.data)
 })
 
+export const AddPost = createAsyncThunk('posts/AddPost', (data) => {
+  return axios
+    .post('/api/posts', { postData: data.postData },  {
+      headers: {
+        authorization: data.token,
+      }
+    })
+    .then(response => response.data)
+})
+
+export const DeletePost = createAsyncThunk('posts/DeletePost', (data) => {
+  return axios
+    .delete('/api/posts/'+data.id, {
+      headers: {
+        authorization: data.token,
+      }
+    })
+    .then(response => response.data)
+})
+
 const PostsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -26,6 +46,30 @@ const PostsSlice = createSlice({
     builder.addCase(fetchPosts.rejected, (state, action) => {
       state.loading = false
       state.posts = []
+      state.error = action.error.message
+    })
+    builder.addCase(AddPost.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(AddPost.fulfilled, (state, action) => {
+      state.loading = false
+      state.posts = action.payload
+      state.error = ''
+    })
+    builder.addCase(AddPost.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    })
+    builder.addCase(DeletePost.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(DeletePost.fulfilled, (state, action) => {
+      state.loading = false
+      state.posts = action.payload
+      state.error = ''
+    })
+    builder.addCase(DeletePost.rejected, (state, action) => {
+      state.loading = false
       state.error = action.error.message
     })
   }

@@ -13,11 +13,17 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DeletePost } from "../../redux/features/Posts/PostsSlice";
 
 function Post({ item }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const { user } = useSelector(state => state)
+
+  const dispatch = useDispatch()
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,6 +32,11 @@ function Post({ item }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleDelete = () => {
+    dispatch(DeletePost({ id: item._id, token: user.token }))
+    handleClose()
+  }
 
   return (
     <Card sx={{ margin: {
@@ -46,12 +57,12 @@ function Post({ item }) {
             title="John Doe"
             subheader="September 14, 2022"
         />
-        <CardMedia
+        { item?.imgURL ? <CardMedia
             component="img"
             height="20%"
-            image="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            image={item?.imgURL}
             alt="Waterfall"
-        />
+        /> : null }
         <CardContent>
             <Typography variant="body2" color="text.secondary">
                 {item?.content}
@@ -91,7 +102,7 @@ function Post({ item }) {
             }}
         >
             <MenuItem onClick={handleClose}>Edit</MenuItem>
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
     </Card>
   )
