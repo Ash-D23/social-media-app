@@ -1,14 +1,15 @@
 import { AppBar, Autocomplete, Avatar, MenuItem, TextField, Typography } from '@mui/material'
 import { TravelExplore } from '@mui/icons-material'
-import {useState}from 'react'
+import {useState} from 'react'
 import { NavContainer, NavMenu, SearchBar, UserBox } from './styles'
-import { useAuthContext } from '../../Context';
 import { Link } from 'react-router-dom';
 import { LinkStylePlain } from '../../Utilities';
+import { useSelector } from 'react-redux'
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const {user} = useAuthContext()
+
+  const { user } = useSelector(state => state.user)
 
   return (
     <AppBar position="sticky">

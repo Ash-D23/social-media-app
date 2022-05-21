@@ -14,7 +14,7 @@ import {
 import { Box } from "@mui/system";
 import { useState } from "react";
 
-function Post() {
+function Post({ item }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -39,8 +39,8 @@ function Post() {
                 />
             }
             action={
-                <IconButton aria-label="settings">
-                    <MoreVert onClick={handleClick} />
+                <IconButton onClick={handleClick}  aria-label="settings">
+                    <MoreVert />
                 </IconButton>
             }
             title="John Doe"
@@ -54,7 +54,7 @@ function Post() {
         />
         <CardContent>
             <Typography variant="body2" color="text.secondary">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel nulla commodo, molestie metus sed, dictum nulla. Phasellus vestibulum neque metus, a vestibulum enim ullamcorper ut.
+                {item?.content}
             </Typography>
         </CardContent>
         <CardActions disableSpacing>

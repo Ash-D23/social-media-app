@@ -38,13 +38,13 @@ export const getPostHandler = function (schema, request) {
 
 /**
  * This handler gets posts of a user in the db.
- * send GET Request at /api/posts/user/:username
+ * send GET Request at /api/posts/user/:userId
  * */
 
 export const getAllUserPostsHandler = function (schema, request) {
-  const { username } = request.params;
+  const { userId } = request.params;
   try {
-    const posts = schema.posts.where({ username })?.models;
+    const posts = schema.posts.where({ userId })?.models;
     return new Response(200, {}, { posts });
   } catch (error) {
     return new Response(
@@ -87,6 +87,7 @@ export const createPostHandler = function (schema, request) {
         dislikedBy: [],
       },
       username: user.username,
+      userId: user._id,
       createdAt: formatDate(),
       updatedAt: formatDate(),
     };

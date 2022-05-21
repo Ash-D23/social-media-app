@@ -2,17 +2,17 @@ import React, { useState } from 'react'
 import { Button, TextField, Typography } from '@mui/material'
 import { AuthContent, FlexCenterBox, LinkStyle } from '../../Utilities'
 import { Link } from 'react-router-dom'
-import { useAuthContext } from '../../Context'
+import { signUp } from '../../redux/features/User/UserSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
 function SignUp() {
-
-  const { signUp } = useAuthContext()
 
   const [FullName, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [ErrorValues, setErrorValues] = useState({})
+  const dispatch = useDispatch()
 
   const validateSubmit = () => {
     const errors = {}
@@ -44,7 +44,7 @@ function SignUp() {
   const signUpHandler = () => {
     const errors = validateSubmit()
     if(Object.keys(errors).length === 0){
-      signUp({ FullName, email, password})
+      dispatch(signUp({ FullName, email, password}))
       setEmail('')
       setPassword('')
       setConfirmPassword('')

@@ -18,8 +18,12 @@ import {
   Switch,
 } from "@mui/material";
 import { SidebarItem } from '../SidebarItem/SidebarItem';
+import { useSelector } from 'react-redux';
 
-function Sidebar({ setMode, mode, handleModalOpen}) {
+function Sidebar({ setMode, mode, handleModalOpen }) {
+  
+  const { user } = useSelector(state => state.user)
+
   return (
     <Box flex={1} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
       <Box position="fixed">
@@ -28,7 +32,7 @@ function Sidebar({ setMode, mode, handleModalOpen}) {
           <SidebarItem  Icon={<Rocket />} path={"/main/explore"} text={"Explore"} />
           <SidebarItem  Icon={<BookmarkBorderOutlined />} path={"/main/bookmarks"} text={"Bookmarks"} />
           <SidebarItem  Icon={<Notifications />} path={"/main/notifications"} text={"Notifications"} />
-          <SidebarItem  Icon={<Person />} path={"/main/profile"} text={"Profile"} />
+          <SidebarItem  Icon={<Person />} path={"/main/profile/"+user._id} text={"Profile"} />
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
