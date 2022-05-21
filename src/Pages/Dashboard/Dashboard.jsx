@@ -12,7 +12,6 @@ function Dashboard() {
     dispatch(fetchPosts())
   }, [])
 
-  console.log(posts)
 
   return (
     <>

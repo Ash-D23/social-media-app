@@ -15,8 +15,6 @@ function App() {
 
   const { user } = useSelector(state => state.user)
 
-  console.log(user)
-
   const darkTheme = createTheme(getDesignTokens(mode))
 
   const location = useLocation()
