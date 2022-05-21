@@ -39,8 +39,8 @@ function Post() {
                 />
             }
             action={
-                <IconButton aria-label="settings">
-                    <MoreVert onClick={handleClick} />
+                <IconButton onClick={handleClick}  aria-label="settings">
+                    <MoreVert />
                 </IconButton>
             }
             title="John Doe"

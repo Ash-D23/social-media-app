@@ -1,10 +1,22 @@
 import { Avatar, Box, Button, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Feed, EditProfileModal } from '../../Components'
 import { AvatarStyles, ImgStyles, ProfileContainer } from './styles'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchProfile, fetchUserPosts } from '../../redux/features/Profile/ProfileSlice'
 
 function Profile() {
   const [open, setopen] = useState(false)
+  const dispatch = useDispatch()
+
+  const {user, profile} = useSelector(state => state)
+
+  console.log(profile)
+
+  useEffect(()=>{
+    dispatch(fetchProfile('0af3d380-4d9e-4b80-88af-b0a59483de42', user.token))
+    dispatch(fetchUserPosts('0af3d380-4d9e-4b80-88af-b0a59483de42', user.token))
+  }, [])
 
   return (
     <>

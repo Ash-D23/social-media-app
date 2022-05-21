@@ -1,16 +1,16 @@
 import { Button, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuthContext } from '../../Context'
 import { AuthContent, FlexCenterBox, FlexSpaceBetweenBox, LinkStyle } from '../../Utilities'
+import { signIn } from '../../redux/features/User/UserSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
 function Login() {
-
-  const { signIn } = useAuthContext()
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   const [ ErrorValues, setErrorValues] = useState({})
+  const dispatch = useDispatch()
 
   const validateSubmit = () => {
     const errors = {}
@@ -32,7 +32,7 @@ function Login() {
   const loginhandler = () => {
     const errors = validateSubmit()
     if(Object.keys(errors).length === 0){
-      signIn({ email, password})
+      dispatch(signIn({ email, password}))
       setEmail('')
       setPassword('')
       setErrorValues({})
@@ -43,7 +43,7 @@ function Login() {
   }
 
   const loginwithtesthandler = () => {
-    signIn({ username: 'adarshbalika', password: 'adarshBalika123'})
+    dispatch(signIn({ username: 'adarshbalika', password: 'adarshBalika123'}))
     setEmail('')
     setPassword('')
   }
