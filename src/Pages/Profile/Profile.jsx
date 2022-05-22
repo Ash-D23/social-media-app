@@ -15,7 +15,6 @@ function Profile() {
 
   useEffect(()=>{
     dispatch(fetchProfile(params.id))
-    dispatch(fetchUserPosts(params.id))
   }, [])
 
   const UserDetails = profile?.profile?.user
@@ -49,7 +48,7 @@ function Profile() {
           </Box>
       </ProfileContainer>
       <Feed posts={profile.userPosts} />
-      <EditProfileModal open={open} setopen={setopen} />
+      { open ? <EditProfileModal open={open} setopen={setopen} /> : null }
     </>
   )
 }

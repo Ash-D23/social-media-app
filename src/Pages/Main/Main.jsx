@@ -1,6 +1,6 @@
 import { Add, BookmarkOutlined, Home, Notifications, Rocket } from '@mui/icons-material';
 import { BottomNavigation, BottomNavigationAction, Box, Fab, Stack } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { CreatePostModal, Rightbar, Sidebar } from '../../Components';
 import { BottomNavContainer, FloaterButton } from './styles';
@@ -9,12 +9,12 @@ function Main({ setMode, mode }) {
 
   const [value, setValue] = useState(0)
   
-  const [ModalOpen, setModalOpen] = useState(false);
+  const [ModalOpen, setModalOpen] = useState(false)
 
   return (
     <Stack direction="row" spacing={{ xs: 0, md: 2}} justifyContent="space-between">
         <Sidebar setMode={setMode} mode={mode} handleModalOpen={()=>setModalOpen(true)} />
-        <Box flex={4} p={{ xs: 0, md: 2 }}>
+        <Box flex={4} p={{ xs: 0, md: 2 }} sx={{ minHeight: '90vh'}}>
           <Outlet />
         </Box>
         <Rightbar />
