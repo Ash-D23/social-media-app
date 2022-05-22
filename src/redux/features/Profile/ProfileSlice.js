@@ -12,6 +12,16 @@ export const fetchProfile= createAsyncThunk('posts/fetchProfile', (id) => {
     .then(response => response.data)
 })
 
+export const EditProfile = createAsyncThunk('posts/EditProfile', (data) => {
+  return axios
+    .post('/api/users/edit', { userData: data.userData }, {
+      headers: {
+        authorization: data.token,
+      }
+    })
+    .then(response => response.data)
+})
+
 export const fetchUserPosts= createAsyncThunk('posts/fetchUserPosts', (id) => {
   return axios
     .get('/api/posts/user/'+id)
@@ -46,6 +56,18 @@ const ProfileSlice = createSlice({
     builder.addCase(fetchUserPosts.rejected, (state, action) => {
       state.loading = false
       state.userPosts = null
+      state.error = action.error.message
+    })
+    builder.addCase(EditProfile.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(EditProfile.fulfilled, (state, action) => {
+      state.loading = false
+      state.profile = action.payload
+      state.error = ''
+    })
+    builder.addCase(EditProfile.rejected, (state, action) => {
+      state.loading = false
       state.error = action.error.message
     })
   }

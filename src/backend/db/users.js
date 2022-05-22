@@ -10,6 +10,7 @@ export const users = [
     _id: '0af3d380-4d9e-4b80-88af-b0a59483de42',
     firstName: "Adarsh",
     lastName: "Balika",
+    FullName: 'Adarsh Balika',
     username: "adarshbalika",
     password: "adarshBalika123",
     createdAt: formatDate(),

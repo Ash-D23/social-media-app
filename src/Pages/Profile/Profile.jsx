@@ -20,13 +20,15 @@ function Profile() {
 
   const UserDetails = profile?.profile?.user
 
+  console.log(UserDetails)
+
   return (
     <>
       <ProfileContainer>
           <Box sx={{ height: '14rem'}}>
             <Box position="relative">
-              <img style={ImgStyles}src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1196&q=80" alt="cover" />
-              <Avatar src="https://material-ui.com/static/images/avatar/1.jpg" sx={AvatarStyles}/>
+              <img style={ImgStyles} src={UserDetails?.coverImg || 'https://images.unsplash.com/photo-1473116763249-2faaef81ccda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1196&q=80'} alt="cover" />
+              <Avatar src={UserDetails?.img || null} sx={AvatarStyles}/>
             </Box>
             <Box m={2} sx={{ display: 'flex', justifyContent: 'flex-end'}}>
               <Button onClick={()=>setopen(true)} variant="outlined">Edit</Button>
@@ -34,7 +36,7 @@ function Profile() {
           </Box>
           <Box ml={3} pb={2}>
             <Box >
-              <Typography variant="h6">{UserDetails?.firstName}</Typography>
+              <Typography variant="h6">{UserDetails?.FullName}</Typography>
               <Typography variant="p">{`@${UserDetails?.username}`}</Typography>
             </Box>
             <Box mt={2}>
