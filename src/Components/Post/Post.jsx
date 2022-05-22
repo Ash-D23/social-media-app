@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
 import { DeletePost, LikePost } from "../../redux/features/Posts/PostsSlice";
 
-function Post({ item }) {
+function Post({ item, isbookmark }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -77,9 +77,9 @@ function Post({ item }) {
                 />
             }
             action={
-                <IconButton onClick={handleClick}  aria-label="settings">
+                isbookmark ? null : (<IconButton onClick={handleClick}  aria-label="settings">
                     <MoreVert />
-                </IconButton>
+                </IconButton>) 
             }
             title="John Doe"
             subheader="September 14, 2022"

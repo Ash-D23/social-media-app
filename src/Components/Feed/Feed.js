@@ -2,7 +2,7 @@ import { Skeleton, Stack } from '@mui/material'
 import React, { useState } from 'react'
 import { Post } from '../Post/Post'
 
-function Feed({ posts }) {
+function Feed({ posts, isbookmark }) {
 
     const [loading, setloading] = useState(false)
 
@@ -15,7 +15,7 @@ function Feed({ posts }) {
         </Stack>
     ) : (
         <>
-            {posts?.map((item) => <Post key={item?._id} item={item} />)}
+            {posts?.map((item) => <Post key={item?._id} item={item} isbookmark={isbookmark} />)}
         </>
     )
 }

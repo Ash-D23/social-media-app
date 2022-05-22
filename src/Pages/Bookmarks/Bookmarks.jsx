@@ -14,7 +14,7 @@ function Bookmarks() {
 
   return (
     <>
-      <Feed posts={bookmarks?.posts} />
+      <Feed posts={bookmarks?.posts} isbookmark={true} />
     </>
   )
 }
