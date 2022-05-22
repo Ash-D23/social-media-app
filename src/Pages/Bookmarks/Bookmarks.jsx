@@ -12,8 +12,6 @@ function Bookmarks() {
     dispatch(fetchBookmarks(user.token))
   }, [])
 
-  console.log(bookmarks)
-
   return (
     <>
       <Feed posts={bookmarks?.posts} />

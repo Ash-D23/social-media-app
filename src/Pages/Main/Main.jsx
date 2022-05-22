@@ -14,7 +14,7 @@ function Main({ setMode, mode }) {
   
   const [ModalOpen, setModalOpen] = useState(false)
 
-  const { user} = useSelector(state => state)
+  const { user } = useSelector(state => state)
 
   const dispatch = useDispatch()
 
@@ -25,31 +25,31 @@ function Main({ setMode, mode }) {
 
   return (
     <Stack direction="row" spacing={{ xs: 0, md: 2}} justifyContent="space-between">
-        <Sidebar setMode={setMode} mode={mode} handleModalOpen={()=>setModalOpen(true)} />
-        <Box flex={4} p={{ xs: 0, md: 2 }} sx={{ minHeight: '90vh'}}>
-          <Outlet />
-        </Box>
-        <Rightbar />
-        <BottomNavContainer elevation={3}>
-            <BottomNavigation
-              showLabels
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-            >
-              <BottomNavigationAction label="Home" icon={<Home />} />
-              <BottomNavigationAction label="Explore" icon={<Rocket />} />
-              <BottomNavigationAction label="BookMarks" icon={<BookmarkOutlined />} />
-              <BottomNavigationAction label="Notifications" icon={<Notifications />} />
-            </BottomNavigation>
-        </BottomNavContainer>
-        <FloaterButton title={'add post'} onClick={(e) => setModalOpen(true)} >
-            <Fab color="primary" aria-label="add">
-              <Add fontSize='large' sx={{margin: '10px'}}/>
-            </Fab>
-        </FloaterButton>
-        <CreatePostModal open={ModalOpen} handleClose={()=>setModalOpen(false)} />
+      <Sidebar setMode={setMode} mode={mode} handleModalOpen={() => setModalOpen(true)} />
+      <Box flex={4} p={{ xs: 0, md: 2 }} sx={{ minHeight: '90vh'}}>
+        <Outlet />
+      </Box>
+      <Rightbar />
+      <BottomNavContainer elevation={3}>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction label="Home" icon={<Home />} />
+            <BottomNavigationAction label="Explore" icon={<Rocket />} />
+            <BottomNavigationAction label="BookMarks" icon={<BookmarkOutlined />} />
+            <BottomNavigationAction label="Notifications" icon={<Notifications />} />
+          </BottomNavigation>
+      </BottomNavContainer>
+      <FloaterButton title={'add post'} onClick={(e) => setModalOpen(true)} >
+          <Fab color="primary" aria-label="add">
+            <Add fontSize='large' sx={{margin: '10px'}}/>
+          </Fab>
+      </FloaterButton>
+      <CreatePostModal open={ModalOpen} handleClose={()=>setModalOpen(false)} />
     </Stack>
   )
 }

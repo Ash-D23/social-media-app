@@ -1,4 +1,4 @@
-import { FavoriteBorder, MoreVert, Share, ModeCommentOutlined, BookmarkBorderOutlined } from "@mui/icons-material";
+import { FavoriteBorder, Favorite, MoreVert, Share, ModeCommentOutlined, BookmarkBorderOutlined, Bookmark } from "@mui/icons-material";
 import {
   Avatar,
   Card,
@@ -15,14 +15,14 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
-import { DeletePost } from "../../redux/features/Posts/PostsSlice";
+import { DeletePost, LikePost } from "../../redux/features/Posts/PostsSlice";
 
 function Post({ item }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const { user } = useSelector(state => state)
+  const { user, bookmarks } = useSelector(state => state)
 
   const dispatch = useDispatch()
 
@@ -38,6 +38,32 @@ function Post({ item }) {
     dispatch(DeletePost({ id: item._id, token: user.token }))
     handleClose()
   }
+
+  const CheckLikedPost = (likes, id) => {
+    let isLiked = false
+    likes.forEach(element => {
+        if(element._id === id){
+            isLiked = true
+            return
+        }
+    });
+
+    return isLiked
+  }
+
+  const CheckBookmarked = (bookmarks, id) => {
+    let isBookmarked = false
+    bookmarks.forEach(element => {
+        if(element._id === id){
+            isBookmarked = true
+        }
+    });
+    return isBookmarked
+  }
+
+  const isLiked = CheckLikedPost(item.likes.likedBy, user.user._id)
+
+  const isBookmarked = CheckBookmarked(bookmarks?.posts, item._id)
 
   return (
     <Card sx={{ margin: {
@@ -71,18 +97,22 @@ function Post({ item }) {
         </CardContent>
         <CardActions disableSpacing>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%'}}>
-                <IconButton aria-label="add to favorites">
+                { isLiked ? (<IconButton aria-label="add to favorites">
+                    <Favorite sx={{ color: "red"}} />
+                </IconButton>) : (<IconButton onClick={() => dispatch(LikePost({ id: item._id, token: user.token}))} aria-label="add to favorites">
                     <FavoriteBorder />
-                </IconButton>
+                </IconButton>) }
                 <IconButton aria-label="comment">
                     <ModeCommentOutlined />
                 </IconButton>
                 <IconButton aria-label="share">
                     <Share />
                 </IconButton>
-                <IconButton onClick={() => dispatch(AddBookmarks({ id: item._id, postData: item, token: user.token}))} aria-label="bookmark">
-                    <BookmarkBorderOutlined />
-                </IconButton>
+                { isBookmarked ? (<IconButton aria-label="bookmark">
+                    <Bookmark />
+                </IconButton>) : (<IconButton onClick={() => dispatch(AddBookmarks({ id: item._id, postData: item, token: user.token}))} aria-label="bookmark">
+                <BookmarkBorderOutlined />
+                </IconButton> ) }
             </Box>
         </CardActions>
         <Menu

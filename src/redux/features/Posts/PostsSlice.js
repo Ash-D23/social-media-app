@@ -31,6 +31,16 @@ export const DeletePost = createAsyncThunk('posts/DeletePost', (data) => {
     .then(response => response.data)
 })
 
+export const LikePost = createAsyncThunk('posts/LikePost', (data) => {
+  return axios
+    .post('/api/posts/like/'+data.id, {}, {
+      headers: {
+        authorization: data.token,
+      }
+    })
+    .then(response => response.data)
+})
+
 const PostsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -69,6 +79,15 @@ const PostsSlice = createSlice({
       state.error = ''
     })
     builder.addCase(DeletePost.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    })
+    builder.addCase(LikePost.fulfilled, (state, action) => {
+      state.loading = false
+      state.posts = action.payload
+      state.error = ''
+    })
+    builder.addCase(LikePost.rejected, (state, action) => {
       state.loading = false
       state.error = action.error.message
     })

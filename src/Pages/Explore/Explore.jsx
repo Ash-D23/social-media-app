@@ -20,12 +20,11 @@ function Explore() {
           marginLeft: 3, 
           marginRight: 3,
         }}>
-        <Chip label="Chip Outlined" variant="outlined" />
-        <Chip label="Chip Outlined" variant="outlined" />
-        <Chip label="Chip Outlined" variant="outlined" />
-        <Chip label="Chip Outlined" variant="outlined" />
+        <Chip label="Latest" variant="outlined" />
+        <Chip label="Trending" variant="outlined" />
+        <Chip label="Most Liked" variant="outlined" />
       </Stack>
-      <Feed posts={posts.posts} />
+    <Feed posts={posts.posts} />
     </>
   )
 }
