@@ -14,6 +14,7 @@ import {
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AddBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
 import { DeletePost } from "../../redux/features/Posts/PostsSlice";
 
 function Post({ item }) {
@@ -79,7 +80,7 @@ function Post({ item }) {
                 <IconButton aria-label="share">
                     <Share />
                 </IconButton>
-                <IconButton aria-label="bookmark">
+                <IconButton onClick={() => dispatch(AddBookmarks({ id: item._id, postData: item, token: user.token}))} aria-label="bookmark">
                     <BookmarkBorderOutlined />
                 </IconButton>
             </Box>

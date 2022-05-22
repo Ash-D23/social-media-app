@@ -1,8 +1,11 @@
 import { Add, BookmarkOutlined, Home, Notifications, Rocket } from '@mui/icons-material';
 import { BottomNavigation, BottomNavigationAction, Box, Fab, Stack } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { CreatePostModal, Rightbar, Sidebar } from '../../Components';
+import { fetchBookmarks } from '../../redux/features/Bookmarks/Bookmarks';
+import { fetchPosts } from '../../redux/features/Posts/PostsSlice';
 import { BottomNavContainer, FloaterButton } from './styles';
 
 function Main({ setMode, mode }) {
@@ -10,6 +13,15 @@ function Main({ setMode, mode }) {
   const [value, setValue] = useState(0)
   
   const [ModalOpen, setModalOpen] = useState(false)
+
+  const { user} = useSelector(state => state)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchBookmarks(user.token))
+    dispatch(fetchPosts())
+  }, [])
 
   return (
     <Stack direction="row" spacing={{ xs: 0, md: 2}} justifyContent="space-between">

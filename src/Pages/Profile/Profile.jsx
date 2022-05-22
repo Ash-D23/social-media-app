@@ -10,7 +10,7 @@ function Profile() {
   const [open, setopen] = useState(false)
   const dispatch = useDispatch()
 
-  const {user, profile} = useSelector(state => state)
+  const {user, profile, posts} = useSelector(state => state)
   const params = useParams()
 
   useEffect(()=>{
@@ -18,8 +18,13 @@ function Profile() {
   }, [])
 
   const UserDetails = profile?.profile?.user
+  console.log(posts)
 
-  console.log(UserDetails)
+  const filterPostsByID = (id) => {
+      return posts?.posts?.posts?.filter((item) => item.userId === id)
+  }
+
+  const UserPosts = filterPostsByID(params.id)
 
   return (
     <>
@@ -47,7 +52,7 @@ function Profile() {
             </Stack>
           </Box>
       </ProfileContainer>
-      <Feed posts={profile.userPosts} />
+      <Feed posts={UserPosts} />
       { open ? <EditProfileModal open={open} setopen={setopen} /> : null }
     </>
   )

@@ -45,19 +45,6 @@ const ProfileSlice = createSlice({
       state.profile = null
       state.error = action.error.message
     })
-    builder.addCase(fetchUserPosts.pending, state => {
-      state.loading = true
-    })
-    builder.addCase(fetchUserPosts.fulfilled, (state, action) => {
-      state.loading = false
-      state.userPosts = action.payload
-      state.error = ''
-    })
-    builder.addCase(fetchUserPosts.rejected, (state, action) => {
-      state.loading = false
-      state.userPosts = null
-      state.error = action.error.message
-    })
     builder.addCase(EditProfile.pending, state => {
       state.loading = true
     })
