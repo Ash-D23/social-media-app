@@ -80,4 +80,3 @@ const BookmarksSlice = createSlice({
 })
 
 export default BookmarksSlice.reducer
-export const {  } = BookmarksSlice.actions
