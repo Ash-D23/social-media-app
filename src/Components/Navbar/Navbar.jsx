@@ -11,6 +11,8 @@ function Navbar() {
 
   const { user } = useSelector(state => state.user)
 
+  console.log(user)
+
   return (
     <AppBar position="sticky">
       <NavContainer>
@@ -48,9 +50,9 @@ function Navbar() {
           <UserBox onClick={(e) => setOpen(true)}>
             <Avatar
               sx={{ width: 30, height: 30 }}
-              src={user.img}
+              src={user?.img}
             />
-            <Typography variant="span">John</Typography>
+            <Typography variant="span">{user?.FullName}</Typography>
           </UserBox>
           </> :  null }
       </NavContainer>
