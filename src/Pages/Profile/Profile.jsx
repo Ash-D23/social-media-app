@@ -10,7 +10,7 @@ function Profile() {
   const [open, setopen] = useState(false)
   const dispatch = useDispatch()
 
-  const {user, profile, posts} = useSelector(state => state)
+  const { profile, posts } = useSelector(state => state)
   const params = useParams()
 
   useEffect(()=>{
@@ -18,7 +18,6 @@ function Profile() {
   }, [])
 
   const UserDetails = profile?.profile?.user
-  console.log(posts)
 
   const filterPostsByID = (id) => {
       return posts?.posts?.posts?.filter((item) => item.userId === id)

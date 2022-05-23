@@ -7,7 +7,9 @@ import Mockman from "mockman-js";
 import "./App.css";
 import { useLocalStorage } from "./hooks/LocalStorage";
 import RequireAuth from './hooks/RequireAuth'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -49,6 +51,7 @@ function App() {
 
         </Routes>
         <Footer />
+        <ToastContainer />
       </Box>
     </ThemeProvider>
   );
