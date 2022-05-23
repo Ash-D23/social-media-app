@@ -1,5 +1,5 @@
 import { Clear, Edit, PhotoCamera } from '@mui/icons-material'
-import { Avatar, Box, Button, Modal, Typography } from '@mui/material'
+import { Avatar, Box, Button, LinearProgress, Modal, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AvatarStyles, ImgStyles, ModalContainer, StyledTextField } from './styles'
@@ -23,11 +23,11 @@ function EditProfileModal({ open, setopen }) {
 
   const [img, setimg] = useState(profile?.user?.img || null)
 
-  console.log(profile?.user)
-
   const [FullName, setFullName] = useState(profile?.user?.FullName)
   const [Bio, setBio] = useState(profile?.user?.Bio)
   const [Url, setUrl] = useState(profile?.user?.Url)
+
+  const [imageUploadLoading, setimageUploadLoading] = useState(false)
 
   const handleCoverChange = (event) => {
     const file = event.target.files[0]
@@ -40,25 +40,16 @@ function EditProfileModal({ open, setopen }) {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-          }
+          setimageUploadLoading(true)
         },
         (error) => {
           console.log(error)
+          setimageUploadLoading(false)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setcoverImg(downloadURL)
+            setimageUploadLoading(false)
           });          
         }
       );
@@ -75,25 +66,16 @@ function EditProfileModal({ open, setopen }) {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-          }
+          setimageUploadLoading(true)
         },
         (error) => {
           console.log(error)
+          setimageUploadLoading(false)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setimg(downloadURL)
+            setimageUploadLoading(false)
           });          
         }
       );
@@ -102,6 +84,11 @@ function EditProfileModal({ open, setopen }) {
   const handleSubmit = () => {
     const userData = { ...profile.user, img, coverImg, FullName, Bio, Url}
     dispatch(EditProfile({ userData, token: user.token}))
+    handleClose()
+  }
+
+  const handleClose = () => {
+    setopen(false)
   }
 
   const defaultCover = 'https://images.unsplash.com/photo-1473116763249-2faaef81ccda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1196&q=80'
@@ -116,7 +103,7 @@ function EditProfileModal({ open, setopen }) {
       >
         <ModalContainer bgcolor='background.paper'>
           <Box sx={{ display: 'flex', alignItems: 'center', p: 2}}>
-            <Clear  sx={{ marginRight: 1, color: 'text.primary'}} />
+            <Clear onClick={handleClose} sx={{ marginRight: 1, color: 'text.primary'}} />
             <Typography color='text.primary' sx={{flexGrow: 1}} variant="h6">
               Edit Profile
             </Typography>
@@ -127,10 +114,10 @@ function EditProfileModal({ open, setopen }) {
               <img src={coverImg || defaultCover} style={ImgStyles} alt="cover" />
               <Avatar src={img} sx={AvatarStyles} />
               <Box position="absolute" sx={{ 
-                color: "#fff",
-                zIndex: 3,
-                bottom: '-2rem', 
-                left: '7.5rem' 
+                  color: "#fff",
+                  zIndex: 3,
+                  bottom: '-2rem', 
+                  left: '7.5rem' 
                 }}>
                 <label htmlFor="file-input-img">
                   <PhotoCamera />
@@ -145,7 +132,7 @@ function EditProfileModal({ open, setopen }) {
 
               <Box position="absolute" sx={{ color: "#fff", zIndex: 3, top: '1rem', right: '1rem'}}>
                 <label htmlFor="file-input-cover-img">
-                <PhotoCamera />
+                  <PhotoCamera />
                 </label>
                 <input 
                   onChange={handleCoverChange} 
@@ -156,7 +143,9 @@ function EditProfileModal({ open, setopen }) {
               </Box>
             </Box>
           </Box>
-          
+          { imageUploadLoading ? <Box p={1}>
+            <LinearProgress />
+          </Box>   : null }       
           <Box p={2}>
             <StyledTextField value={FullName} onChange={(e)=> setFullName(e.target.value)} id="outlined-basic" label="Full Name" variant="outlined" />
             <StyledTextField value={Bio} onChange={(e)=> setBio(e.target.value)} id="outlined-basic" label="Bio" variant="outlined" />

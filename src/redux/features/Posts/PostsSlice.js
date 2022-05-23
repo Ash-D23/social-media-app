@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { toastsuccess } from '../../../Utilities'
 
 const initialState = {
   posts: []
@@ -72,6 +73,7 @@ const PostsSlice = createSlice({
       state.loading = true
     })
     builder.addCase(AddPost.fulfilled, (state, action) => {
+      toastsuccess('Post added Succesfully')
       state.loading = false
       state.posts = action.payload
       state.error = ''
@@ -84,6 +86,7 @@ const PostsSlice = createSlice({
       state.loading = true
     })
     builder.addCase(DeletePost.fulfilled, (state, action) => {
+      toastsuccess('Post Deleted Succesfully')
       state.loading = false
       state.posts = action.payload
       state.error = ''

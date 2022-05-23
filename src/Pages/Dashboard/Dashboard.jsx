@@ -6,10 +6,12 @@ function Dashboard() {
 
   const { posts } = useSelector(state => state.posts)
 
+  const reversePost = posts?.posts ? [...posts.posts].reverse() : []
+
   return (
     <>
       <NewPost />
-      <Feed posts={posts.posts} />
+      <Feed posts={reversePost} />
     </>
   )
 }

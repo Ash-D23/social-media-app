@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { toastsuccess } from '../../../Utilities'
 import { EditProfile } from '../Profile/ProfileSlice'
 
 const initialState = {
@@ -24,6 +25,8 @@ const UserSlice = createSlice({
   initialState,
   reducers: {
     logout: state => {
+      localStorage.setItem('user', null)
+      localStorage.setItem('token', null)
       state.user = null
       state.token = null
     }
@@ -35,6 +38,7 @@ const UserSlice = createSlice({
     builder.addCase(signIn.fulfilled, (state, action) => {
       localStorage.setItem('user', JSON.stringify(action.payload.foundUser))
       localStorage.setItem('token', JSON.stringify(action.payload.encodedToken))
+      toastsuccess("Login Successfull")
       state.loading = false
       state.user = action.payload.foundUser
       state.token = action.payload.encodedToken
@@ -52,6 +56,7 @@ const UserSlice = createSlice({
     builder.addCase(signUp.fulfilled, (state, action) => {
       localStorage.setItem('user', JSON.stringify(action.payload.foundUser))
       localStorage.setItem('token', JSON.stringify(action.payload.encodedToken))
+      toastsuccess("Sign Up Successfull")
       state.loading = false
       state.user = action.payload.foundUser
       state.token = action.payload.encodedToken

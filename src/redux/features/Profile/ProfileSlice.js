@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { toastsuccess } from '../../../Utilities/ToastMessage'
 
 const initialState = {
   profile: null,
@@ -49,6 +50,7 @@ const ProfileSlice = createSlice({
       state.loading = true
     })
     builder.addCase(EditProfile.fulfilled, (state, action) => {
+      toastsuccess('Profile Updated')
       state.loading = false
       state.profile = action.payload
       state.error = ''
