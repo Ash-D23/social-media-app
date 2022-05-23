@@ -16,7 +16,7 @@ export const LoaderContainer = styled(Box)({
     justifyContent: 'center'
 });
 
-export const LoaderOverlay = styled(Box)({
+export const LoaderContainerOverlay = styled(Box)({
     position: 'fixed',
     top: 0,
     left: 0,
