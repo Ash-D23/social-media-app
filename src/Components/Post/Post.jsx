@@ -12,19 +12,33 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddBookmarks, DeleteBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
 import { DeletePost, DisLikePost, LikePost } from "../../redux/features/Posts/PostsSlice";
+import { FormattedDate } from "../../Utilities";
 
 function Post({ item, isbookmark }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
+  const [UserDetails, setUserDetails] = useState({})
+
   const { user, bookmarks } = useSelector(state => state)
 
   const dispatch = useDispatch()
+
+  useEffect(()=>{
+    (
+        function(){
+            axios
+                .get('/api/users/'+item.userId)
+                .then(response => setUserDetails(response.data.user))
+        }
+    )()
+  }, [])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -73,7 +87,7 @@ function Post({ item, isbookmark }) {
         <CardHeader
             avatar={
                 <Avatar
-                src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                src={UserDetails?.img}
                 />
             }
             action={
@@ -81,8 +95,8 @@ function Post({ item, isbookmark }) {
                     <MoreVert />
                 </IconButton>) 
             }
-            title="John Doe"
-            subheader="September 14, 2022"
+            title={UserDetails?.FullName}
+            subheader={FormattedDate(new Date(item?.createdAt))}
         />
         { item?.imgURL ? <CardMedia
             component="img"
