@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { EditProfile } from '../Profile/ProfileSlice'
 
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -61,6 +62,9 @@ const UserSlice = createSlice({
       state.user = ''
       state.token = ''
       state.error = action.error.message
+    })
+    builder.addCase(EditProfile.fulfilled, (state, action) => {
+      state.user = action.payload.user
     })
   }
 })
