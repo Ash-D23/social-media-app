@@ -25,9 +25,9 @@ export const AddBookmarks = createAsyncThunk('bookmarks/AddBookmarks', (data) =>
     .then(response => response.data)
 })
 
-export const DeleteBookmarks = createAsyncThunk('bookmarks/DeletePost', (data) => {
+export const DeleteBookmarks = createAsyncThunk('bookmarks/DeleteBookmarks', (data) => {
   return axios
-    .delete('/api/users/remove-bookmark/'+data.id, {
+    .post('/api/users/remove-bookmark/'+data.id, {} ,{
       headers: {
         authorization: data.token,
       }

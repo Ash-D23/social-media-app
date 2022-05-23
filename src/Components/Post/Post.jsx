@@ -14,8 +14,8 @@ import {
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
-import { DeletePost, LikePost } from "../../redux/features/Posts/PostsSlice";
+import { AddBookmarks, DeleteBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
+import { DeletePost, DisLikePost, LikePost } from "../../redux/features/Posts/PostsSlice";
 
 function Post({ item, isbookmark }) {
 
@@ -97,7 +97,7 @@ function Post({ item, isbookmark }) {
         </CardContent>
         <CardActions disableSpacing>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%'}}>
-                { isLiked ? (<IconButton aria-label="add to favorites">
+                { isLiked ? (<IconButton onClick={()=> dispatch(DisLikePost({id: item._id, token: user.token}))} aria-label="add to favorites">
                     <Favorite sx={{ color: "red"}} />
                 </IconButton>) : (<IconButton onClick={() => dispatch(LikePost({ id: item._id, token: user.token}))} aria-label="add to favorites">
                     <FavoriteBorder />
@@ -108,7 +108,7 @@ function Post({ item, isbookmark }) {
                 <IconButton aria-label="share">
                     <Share />
                 </IconButton>
-                { isBookmarked ? (<IconButton aria-label="bookmark">
+                { isBookmarked ? (<IconButton onClick={() => dispatch(DeleteBookmarks({ id: item._id, token: user.token}))} aria-label="bookmark">
                     <Bookmark />
                 </IconButton>) : (<IconButton onClick={() => dispatch(AddBookmarks({ id: item._id, postData: item, token: user.token}))} aria-label="bookmark">
                 <BookmarkBorderOutlined />
