@@ -1,9 +1,79 @@
-import {  EmojiEmotions, Image } from '@mui/icons-material';
+import {  EmojiEmotions, Image, InsertPhoto, Mood } from '@mui/icons-material';
 import { Avatar, Button, ButtonGroup, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddPost } from '../../redux/features/Posts/PostsSlice';
 import { SytledModal, UserBox } from './styles';
+import app from "../../firebase";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 function CreatePostModal({ open, handleClose }) {
+
+  const [text, settext] = useState('')
+  const [img, setimg] = useState('')
+
+  const dispatch = useDispatch()
+
+  const {user} = useSelector(state => state)
+
+  const Reset = () => {
+    settext('')
+    setimg('')
+  }
+
+  const handlePostSubmit = () => {
+    if(!text){
+      return
+    }
+    const newPost = { content: text}
+    if(img){
+      handleupdate(img, newPost)
+    }else{
+      dispatch(AddPost({ postData: newPost, token: user.token}))
+    }
+    Reset()
+    handleClose()
+  }
+
+  const handleupdate = (file, newPost)=>{
+      const fileName = new Date().getTime() + file.name;
+      const storage = getStorage(app);
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+          }
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            newPost.imgURL = downloadURL
+            dispatch(AddPost({ postData: newPost, token: user.token}))
+          });          
+        }
+      );
+  }
 
   return (
       <SytledModal
@@ -25,11 +95,11 @@ function CreatePostModal({ open, handleClose }) {
           </Typography>
           <UserBox>
             <Avatar
-              src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              src={user?.user.img}
               sx={{ width: 30, height: 30 }}
             />
             <Typography fontWeight={500} variant="span">
-              John Doe
+              {user?.user.FullName}
             </Typography>
           </UserBox>
           <TextField
@@ -37,19 +107,24 @@ function CreatePostModal({ open, handleClose }) {
             id="standard-multiline-static"
             multiline
             rows={3}
+            value={text}
+            onChange={(e)=> settext(e.target.value)}
             placeholder="What's on your mind?"
             variant="standard"
           />
-          <Stack direction="row" gap={1} mt={2} mb={3}>
-            <EmojiEmotions color="primary" />
-            <Image color="primary" />
+          <Stack direction="row" spacing={2} mt={2} mb={3}>
+            <label htmlFor="file-input-img-modal">
+              <InsertPhoto />
+            </label>
+            <input onChange={e => setimg(e.target.files[0])} id="file-input-img-modal" style={{ display: 'none'}} type="file" accept="image/png, image/jpeg" />
+            <Mood />
           </Stack>
           <ButtonGroup
             fullWidth
             variant="contained"
             aria-label="outlined primary button group"
           >
-            <Button>Post</Button>
+            <Button onClick={handlePostSubmit}>Post</Button>
           </ButtonGroup>
         </Box>
       </SytledModal>
