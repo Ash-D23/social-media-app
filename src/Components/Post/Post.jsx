@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddBookmarks, DeleteBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
 import { DeletePost, DisLikePost, LikePost } from "../../redux/features/Posts/PostsSlice";
 import { FormattedDate } from "../../Utilities";
+import { EditPostModal } from '../EditPostModal/EditPostModal'
 
 function Post({ item, isbookmark }) {
 
@@ -25,6 +26,7 @@ function Post({ item, isbookmark }) {
   const open = Boolean(anchorEl);
 
   const [UserDetails, setUserDetails] = useState({})
+  const [openModal, setopenModal] = useState(false)
 
   const { user, bookmarks } = useSelector(state => state)
 
@@ -51,6 +53,11 @@ function Post({ item, isbookmark }) {
   const handleDelete = () => {
     dispatch(DeletePost({ id: item._id, token: user.token }))
     handleClose()
+  }
+
+  const handleEdit = () => {
+     setopenModal(true)
+     handleClose()
   }
 
   const CheckLikedPost = (likes, id) => {
@@ -146,9 +153,10 @@ function Post({ item, isbookmark }) {
                 horizontal: "right",
             }}
         >
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
+            <MenuItem onClick={handleEdit}>Edit</MenuItem>
             <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
+        { openModal ? <EditPostModal open={openModal} handleClose={()=> setopenModal(false)} data={item} /> : null}
     </Card>
   )
 }

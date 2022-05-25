@@ -22,6 +22,16 @@ export const AddPost = createAsyncThunk('posts/AddPost', (data) => {
     .then(response => response.data)
 })
 
+export const EditPost = createAsyncThunk('posts/EditPost', (data) => {
+  return axios
+    .post('/api/posts/edit/'+data.id, { postData: data.postData },  {
+      headers: {
+        authorization: data.token,
+      }
+    })
+    .then(response => response.data)
+})
+
 export const DeletePost = createAsyncThunk('posts/DeletePost', (data) => {
   return axios
     .delete('/api/posts/'+data.id, {
@@ -79,6 +89,19 @@ const PostsSlice = createSlice({
       state.error = ''
     })
     builder.addCase(AddPost.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    })
+    builder.addCase(EditPost.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(EditPost.fulfilled, (state, action) => {
+      toastsuccess('Post Edited Succesfully')
+      state.loading = false
+      state.posts = action.payload
+      state.error = ''
+    })
+    builder.addCase(EditPost.rejected, (state, action) => {
       state.loading = false
       state.error = action.error.message
     })

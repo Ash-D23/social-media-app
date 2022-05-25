@@ -1,10 +1,6 @@
-import { InsertPhoto, Mood } from '@mui/icons-material';
-import { Avatar, Button, ButtonGroup, Stack, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AddPost } from '../../redux/features/Posts/PostsSlice';
-import { SytledModal, UserBox } from './styles';
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { EditPost } from '../../redux/features/Posts/PostsSlice'
 import app from "../../firebase";
 import {
   getStorage,
@@ -12,11 +8,14 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { Avatar, Badge, Box, Button, ButtonGroup, LinearProgress, Stack, TextField, Typography } from '@mui/material';
+import { Clear, InsertPhoto, Mood } from '@mui/icons-material';
+import { UserBox, SytledModal} from '../CreatePostModal/styles'
 
-function CreatePostModal({ open, handleClose }) {
-
-  const [text, settext] = useState('')
-  const [img, setimg] = useState('')
+function EditPostModal({ open, handleClose, data }) {
+  const [text, settext] = useState(data?.content || '')
+  const [img, setimg] = useState(data?.imgURL || '')
+  const [imageUploadLoading, setimageUploadLoading] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -31,12 +30,8 @@ function CreatePostModal({ open, handleClose }) {
     if(!text){
       return
     }
-    const newPost = { content: text}
-    if(img){
-      handleupdate(img, newPost)
-    }else{
-      dispatch(AddPost({ postData: newPost, token: user.token}))
-    }
+    const newPost = { ...data, content: text, imgURL: img}
+    dispatch(EditPost({ id: data._id, postData: newPost, token: user.token}))   
     Reset()
     handleClose()
   }
@@ -50,14 +45,16 @@ function CreatePostModal({ open, handleClose }) {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
+          setimageUploadLoading(true)
         },
         (error) => {
           console.log(error)
+          setimageUploadLoading(false)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            newPost.imgURL = downloadURL
-            dispatch(AddPost({ postData: newPost, token: user.token}))
+            setimg(downloadURL)
+            setimageUploadLoading(false)
           });          
         }
       );
@@ -72,14 +69,14 @@ function CreatePostModal({ open, handleClose }) {
       >
         <Box
           width={500}
-          height={325}
+          minHeight={325}
           bgcolor={"background.default"}
           color={"text.primary"}
           p={3}
           borderRadius={5}
         >
           <Typography variant="h6" color="gray" textAlign="center">
-            Create post
+            Edit post
           </Typography>
           <UserBox>
             <Avatar
@@ -100,12 +97,22 @@ function CreatePostModal({ open, handleClose }) {
             placeholder="What's on your mind?"
             variant="standard"
           />
-          <Stack direction="row" sx={{ alignItems: 'center'}} spacing={2} mt={2} mb={3}>
+
+          { img ? <Box pt={1}>
+          { img ? <Box position="relative" pt={1}>
+            <img style={{ width: '200px', height: '100px'}} src={img} alt="edit" />
+            <Badge onClick={() => setimg('')} sx={{ position: 'absolute', top: '20px', left: '180px'}} color="secondary" overlap="circular" badgeContent={<Clear sx={{ fontSize: "14px"}} />}>
+
+            </Badge>
+        </Box> : null }
+                  </Box> : null }
+
+          { imageUploadLoading ? <Box mt={1} mb={1}><LinearProgress /></Box> : null}
+          <Stack direction="row" spacing={2} mt={2} mb={3}>
             <label htmlFor="file-input-img-modal">
               <InsertPhoto />
             </label>
-            <input onChange={e => setimg(e.target.files[0])} id="file-input-img-modal" style={{ display: 'none'}} type="file" accept="image/png, image/jpeg" />
-            { img ? <p>[{img.name}]</p> : null }
+            <input onChange={e => handleupdate(e.target.files[0])} id="file-input-img-modal" style={{ display: 'none'}} type="file" accept="image/png, image/jpeg" />
             <Mood />
           </Stack>
           <ButtonGroup
@@ -120,4 +127,4 @@ function CreatePostModal({ open, handleClose }) {
   )
 }
 
-export { CreatePostModal }
+export { EditPostModal }

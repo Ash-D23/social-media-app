@@ -68,7 +68,7 @@ function Navbar() {
             horizontal: "right",
           }}
         >
-          <MenuItem>Profile</MenuItem>
+          <MenuItem onClick={(e) => setOpen(false)}><Link style={LinkStylePlain} to={"/main/profile/"+ user?._id}>Profile</Link></MenuItem>
           <MenuItem onClick={(e) => setOpen(false)}><Link style={LinkStylePlain} to="/logout">Logout</Link></MenuItem>
       </NavMenu>
     </AppBar>

@@ -1,5 +1,5 @@
-import { ContentCutOutlined, InsertPhoto, Mood, ResetTvTwoTone } from '@mui/icons-material'
-import { Box, Button, Stack, TextField } from '@mui/material'
+import { Clear, InsertPhoto, Mood } from '@mui/icons-material'
+import { Badge, Box, Button, Stack, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { FlexSpaceBetweenBox } from '../../Utilities'
 import app from "../../firebase";
@@ -94,6 +94,12 @@ function NewPost() {
             onChange={(e)=> settext(e.target.value)}
             sx={{ width: '100%'}}
         />
+        { img ? <Box position="relative" pt={1}>
+            <img style={{ width: '200px', height: '100px'}} src={URL.createObjectURL(img)} alt="new" />
+            <Badge onClick={() => setimg('')} sx={{ position: 'absolute', top: '20px', left: '180px'}} color="secondary" overlap="circular" badgeContent={<Clear sx={{ fontSize: "14px"}} />}>
+
+            </Badge>
+        </Box> : null }
         <FlexSpaceBetweenBox mt={1}>
           <Stack direction="row" spacing={2}>
             <label htmlFor="file-input-img">
