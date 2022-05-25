@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddPost } from '../../redux/features/Posts/PostsSlice';
-import { SytledModal, UserBox } from './styles';
+import { SytledModal, UserBox } from '../../Utilities';
 import app from "../../firebase";
 import {
   getStorage,

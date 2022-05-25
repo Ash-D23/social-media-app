@@ -10,7 +10,7 @@ import {
 } from "firebase/storage";
 import { Avatar, Badge, Box, Button, ButtonGroup, LinearProgress, Stack, TextField, Typography } from '@mui/material';
 import { Clear, InsertPhoto, Mood } from '@mui/icons-material';
-import { UserBox, SytledModal} from '../CreatePostModal/styles'
+import { SytledModal, UserBox } from '../../Utilities';
 
 function EditPostModal({ open, handleClose, data }) {
   const [text, settext] = useState(data?.content || '')
