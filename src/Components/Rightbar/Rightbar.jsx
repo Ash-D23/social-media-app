@@ -6,10 +6,23 @@ import {
   ImageListItem,
   Typography,
 } from "@mui/material";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { FollowPeople } from "../FollowPeople/FollowPeople";
 
 const Rightbar = () => {
+
+  const [Users, setUsers] = useState([])
+  const { user } = useSelector(state => state.user)
+
+  useEffect(()=>{
+    (async function(){
+      const res = await axios.get('/api/users')
+      setUsers(res.data.users)
+    })()
+  }, [])
+
   return (
     <Box flex={2} p={2} sx={{ display: { xs: "none", lg: "block" } }}>
       <Box position="fixed" width={350}>
@@ -40,10 +53,12 @@ const Rightbar = () => {
           People you may Know
         </Typography>
         <Box>
-          <FollowPeople />
-          <FollowPeople />
-          <FollowPeople />
-          <FollowPeople />
+          { Users?.map((userDetails) => {
+            if(userDetails._id === user._id){
+              return null
+            }
+            return <FollowPeople user={userDetails} />
+          })}
         </Box>
       </Box>
     </Box>
