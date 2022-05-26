@@ -31,10 +31,18 @@ function Post({ item, isbookmark }) {
   const [UserDetails, setUserDetails] = useState({})
   const [openModal, setopenModal] = useState(false)
   const [showComments, setshowComments] = useState(false)
+  const [comments, setcomments] = useState([])
+  const [commentinput, setcommentinput] = useState('')
 
   const { user, bookmarks } = useSelector(state => state)
 
   const dispatch = useDispatch()
+
+  const config = {
+    headers: {
+      authorization: user.token,
+    }
+  }
 
   useEffect(()=>{
     (
@@ -45,6 +53,34 @@ function Post({ item, isbookmark }) {
         }
     )()
   }, [])
+
+  useEffect(()=>{
+    (
+        function(){
+            axios
+                .get('/api/comments/'+item._id)
+                .then(response => setcomments(response.data.comments))
+        }
+    )()
+  }, [])
+
+  const addComment = async () => {
+      const res = await axios.post('/api/comments/add/'+item._id, { commentData: { text: commentinput, username: user.username}}, config)
+      setcomments(res.data.comments)
+      setcommentinput('')
+  }
+
+  const editComment = async (data, id) => {
+    const res = await axios.post('/api/comments/edit/'+ item._id + '/' +id, { commentData: data}, config)
+    setcomments(res.data.comments)
+    setcommentinput('')
+  }
+
+  const deleteComment = async (id) => {
+    const res = await axios.post('/api/comments/delete/'+ item._id + '/' +id, {}, config)
+    setcomments(res.data.comments)
+    setcommentinput('')
+  }
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -89,8 +125,6 @@ function Post({ item, isbookmark }) {
   const isLiked = CheckLikedPost(item.likes.likedBy, user.user._id)
 
   const isBookmarked = CheckBookmarked(bookmarks?.posts, item._id)
-
-  console.log(item.comments)
 
   return (
     <Card sx={{ margin: {
@@ -148,12 +182,17 @@ function Post({ item, isbookmark }) {
                         <Avatar />
                     </Box>
                     <Box ml={2} sx={{ flexGrow: 1}}>
-                        <TextField sx={{ width: '100%'}} id="standard-basic" variant="standard" />
+                        <TextField 
+                        value={commentinput} 
+                        onChange={(e) => setcommentinput(e.target.value)} 
+                        sx={{ width: '100%'}} 
+                        id="standard-basic" 
+                        variant="standard" />
                     </Box>
-                    <Button>Add</Button>
+                    <Button onClick={addComment}>Add</Button>
                 </Box>
                 <Box>
-                { item.comments?.map((comment) => <Comment comment={comment} />)}
+                { comments?.map((comment) => <Comment key={comment._id} comment={comment} />)}
                 </Box>
         </Box> : null}
         <Menu
