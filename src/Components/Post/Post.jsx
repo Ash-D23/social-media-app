@@ -1,6 +1,7 @@
 import { FavoriteBorder, Favorite, MoreVert, Share, ModeCommentOutlined, BookmarkBorderOutlined, Bookmark } from "@mui/icons-material";
 import {
   Avatar,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -9,6 +10,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  TextField,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -18,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddBookmarks, DeleteBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
 import { DeletePost, DisLikePost, LikePost } from "../../redux/features/Posts/PostsSlice";
 import { FormattedDate } from "../../Utilities";
+import { Comment } from "../Comment/Comment";
 import { EditPostModal } from '../EditPostModal/EditPostModal'
 
 function Post({ item, isbookmark }) {
@@ -27,6 +30,7 @@ function Post({ item, isbookmark }) {
 
   const [UserDetails, setUserDetails] = useState({})
   const [openModal, setopenModal] = useState(false)
+  const [showComments, setshowComments] = useState(false)
 
   const { user, bookmarks } = useSelector(state => state)
 
@@ -86,6 +90,8 @@ function Post({ item, isbookmark }) {
 
   const isBookmarked = CheckBookmarked(bookmarks?.posts, item._id)
 
+  console.log(item.comments)
+
   return (
     <Card sx={{ margin: {
         xs: 1,
@@ -123,7 +129,7 @@ function Post({ item, isbookmark }) {
                 </IconButton>) : (<IconButton onClick={() => dispatch(LikePost({ id: item._id, token: user.token}))} aria-label="add to favorites">
                     <FavoriteBorder />
                 </IconButton>) }
-                <IconButton aria-label="comment">
+                <IconButton onClick={() => setshowComments( prev => !prev)} aria-label="comment">
                     <ModeCommentOutlined />
                 </IconButton>
                 <IconButton aria-label="share">
@@ -136,6 +142,20 @@ function Post({ item, isbookmark }) {
                 </IconButton> ) }
             </Box>
         </CardActions>
+        { showComments ? <Box>
+                <Box p={2} sx={{ display: 'flex'}}>
+                    <Box>
+                        <Avatar />
+                    </Box>
+                    <Box ml={2} sx={{ flexGrow: 1}}>
+                        <TextField sx={{ width: '100%'}} id="standard-basic" variant="standard" />
+                    </Box>
+                    <Button>Add</Button>
+                </Box>
+                <Box>
+                { item.comments?.map((comment) => <Comment comment={comment} />)}
+                </Box>
+        </Box> : null}
         <Menu
             id="basic-menu"
             open={open}
