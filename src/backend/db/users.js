@@ -8,11 +8,12 @@ import { formatDate } from "../utils/authUtils";
 export const users = [
   {
     _id: '0af3d380-4d9e-4b80-88af-b0a59483de42',
-    firstName: "Adarsh",
-    lastName: "Balika",
-    FullName: 'Adarsh Balika',
+    firstName: "Akshay",
+    lastName: "Kumar",
+    FullName: 'Akshay Kumar',
     username: "adarshbalika",
     password: "adarshBalika123",
+    img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
@@ -23,6 +24,7 @@ export const users = [
     FullName: 'Abbas Mustan',
     username: "abbasmustan",
     password: "adarshBalika123",
+    img: "https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },

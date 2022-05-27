@@ -43,7 +43,7 @@ function Comment({ comment, editComment, deleteComment }) {
   return editMode ? (
     <Box p={2} sx={{ display: 'flex', alignItems: 'center'}}>
     <Box>
-        <Avatar />
+        <Avatar src={comment?.userimg} />
     </Box>
     <Box ml={2} sx={{ flexGrow: '1'}}>
         <TextField
@@ -65,7 +65,7 @@ function Comment({ comment, editComment, deleteComment }) {
   ) : (
     <Box p={2} sx={{ display: 'flex', alignItems: 'center'}}>
         <Box>
-            <Avatar />
+          <Avatar src={comment?.userimg} />
         </Box>
         <Box ml={2} sx={{ flexGrow: '1'}}>
             <Typography variant="p">{comment?.text}</Typography>
