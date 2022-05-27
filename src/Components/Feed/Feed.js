@@ -2,12 +2,10 @@ import { Skeleton, Stack } from '@mui/material'
 import React, { useState } from 'react'
 import { Post } from '../Post/Post'
 
-function Feed({ posts, isbookmark }) {
+function Feed({ posts, isbookmark, isLoading }) {
 
-    const [loading, setloading] = useState(false)
-
-    return loading ? (
-        <Stack spacing={1}>
+    return isLoading ? (
+        <Stack p={4} spacing={1}>
             <Skeleton variant="text" height={100} />
             <Skeleton variant="text" height={20} />
             <Skeleton variant="text" height={20} />

@@ -1,5 +1,5 @@
 import { Clear, InsertPhoto, Mood } from '@mui/icons-material'
-import { Badge, Box, Button, Stack, TextField } from '@mui/material'
+import { Badge, Box, Button, LinearProgress, Stack, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { FlexSpaceBetweenBox } from '../../Utilities'
 import app from "../../firebase";
@@ -16,6 +16,7 @@ function NewPost() {
 
   const [text, settext] = useState('')
   const [img, setimg] = useState('')
+  const [imageUploadLoading, setimageUploadLoading] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -48,24 +49,15 @@ function NewPost() {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-          }
+          setimageUploadLoading(true)
         },
         (error) => {
           console.log(error)
+          setimageUploadLoading(false)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setimageUploadLoading(false)
             newPost.imgURL = downloadURL
             dispatch(AddPost({ postData: newPost, token: user.token}))
           });          
@@ -112,6 +104,7 @@ function NewPost() {
             Post
           </Button>
         </FlexSpaceBetweenBox>
+        { imageUploadLoading ? <Box mt={1} mb={1}><LinearProgress /></Box> : null}
     </Box>
   )
 }

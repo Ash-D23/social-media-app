@@ -1,5 +1,5 @@
 import { InsertPhoto, Mood } from '@mui/icons-material';
-import { Avatar, Button, ButtonGroup, Stack, TextField, Typography } from '@mui/material';
+import { Avatar, Button, ButtonGroup, LinearProgress, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +17,7 @@ function CreatePostModal({ open, handleClose }) {
 
   const [text, settext] = useState('')
   const [img, setimg] = useState('')
+  const [imageUploadLoading, setimageUploadLoading] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -36,9 +37,10 @@ function CreatePostModal({ open, handleClose }) {
       handleupdate(img, newPost)
     }else{
       dispatch(AddPost({ postData: newPost, token: user.token}))
+      Reset()
+      handleClose()
     }
-    Reset()
-    handleClose()
+    
   }
 
   const handleupdate = (file, newPost)=>{
@@ -50,12 +52,17 @@ function CreatePostModal({ open, handleClose }) {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
+          setimageUploadLoading(true)
         },
         (error) => {
+          setimageUploadLoading(false)
           console.log(error)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setimageUploadLoading(false)
+            Reset()
+            handleClose()
             newPost.imgURL = downloadURL
             dispatch(AddPost({ postData: newPost, token: user.token}))
           });          
@@ -115,6 +122,7 @@ function CreatePostModal({ open, handleClose }) {
           >
             <Button onClick={handlePostSubmit}>Post</Button>
           </ButtonGroup>
+          { imageUploadLoading ? <Box mt={1} mb={1}><LinearProgress /></Box> : null}
         </Box>
       </SytledModal>
   )

@@ -15,7 +15,7 @@ function Bookmarks() {
 
   return (
     <>
-      <Feed posts={bookmarks?.posts} isbookmark={true} />
+      <Feed posts={bookmarks?.posts} isbookmark={true} isLoading={bookmarks.loading} />
       {bookmarks?.posts.length === 0 ? (
         <FlexCenterBox p={2} >
           <img style={{ height: '75vh'}} src="/Images/empty.svg" />

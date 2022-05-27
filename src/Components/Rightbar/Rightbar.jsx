@@ -26,7 +26,7 @@ const Rightbar = () => {
     if(userDetails._id === user._id){
       return false
     }
-    if(CheckIdinArray(user.following, userDetails._id)){
+    if(CheckIdinArray(user?.following || [], userDetails._id)){
       return false
     }
     return true
