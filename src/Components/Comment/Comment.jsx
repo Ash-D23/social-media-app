@@ -1,22 +1,41 @@
 import { Clear, MoreVert, Save } from '@mui/icons-material'
-import { Avatar, Box, Grid, IconButton, Menu, MenuItem, TextField, Typography } from '@mui/material'
+import { Avatar, Box, IconButton, Menu, MenuItem, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 
-function Comment({ comment }) {
+function Comment({ comment, editComment, deleteComment }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [editMode, seteditMode] = useState(false)
   const [commentinput, setcommentinput] = useState(comment.text)
 
-
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
+
+  const handleEditClick = () => {
+    seteditMode(true)
+    handleClose()
+  }
+
+  const handleEdit = () => {
+    editComment({ text: commentinput  }, comment._id)
+    seteditMode(false)
+  }
+
+  const handleDelete = () => {
+    deleteComment(comment._id)
+    handleClose()
+  }
+
+  const handleCancel = () => {
+    setcommentinput(comment.text)
+    seteditMode(false)
+  }
 
   return editMode ? (
     <Box p={2} sx={{ display: 'flex', alignItems: 'center'}}>
@@ -32,10 +51,10 @@ function Comment({ comment }) {
             variant="standard" />
     </Box>
     <Box>
-        <IconButton aria-label="settings">
+        <IconButton onClick={handleEdit} aria-label="settings">
             <Save />
         </IconButton>   
-        <IconButton onClick={() => seteditMode(false)} aria-label="settings">
+        <IconButton onClick={handleCancel} aria-label="settings">
             <Clear />
         </IconButton>  
     </Box>
@@ -68,8 +87,8 @@ function Comment({ comment }) {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={() => {seteditMode(true); handleClose() }}>Edit</MenuItem>
-        <MenuItem onClick={handleClose}>Delete</MenuItem>
+        <MenuItem onClick={handleEditClick}>Edit</MenuItem>
+        <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
     </Box>
   )
