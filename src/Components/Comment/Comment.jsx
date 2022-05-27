@@ -1,6 +1,7 @@
 import { Clear, MoreVert, Save } from '@mui/icons-material'
 import { Avatar, Box, IconButton, Menu, MenuItem, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 function Comment({ comment, editComment, deleteComment }) {
 
@@ -8,6 +9,8 @@ function Comment({ comment, editComment, deleteComment }) {
   const open = Boolean(anchorEl);
   const [editMode, seteditMode] = useState(false)
   const [commentinput, setcommentinput] = useState(comment.text)
+
+  const { user } = useSelector(state => state.user)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -68,9 +71,9 @@ function Comment({ comment, editComment, deleteComment }) {
             <Typography variant="p">{comment?.text}</Typography>
         </Box>
         <Box>
-            <IconButton onClick={handleClick} aria-label="settings">
+            { comment?.username === user.username ? <IconButton onClick={handleClick} aria-label="settings">
                 <MoreVert />
-            </IconButton>   
+            </IconButton>  : null }
         </Box>
         <Menu
         id="demo-positioned-menu"

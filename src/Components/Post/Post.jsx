@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddBookmarks, DeleteBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
 import { DeletePost, DisLikePost, LikePost } from "../../redux/features/Posts/PostsSlice";
-import { CheckIdinArray, FormattedDate } from "../../Utilities";
+import { CheckIdinArray, FormattedDate, toastsuccess } from "../../Utilities";
 import { Comment } from "../Comment/Comment";
 import { EditPostModal } from '../EditPostModal/EditPostModal';
 
@@ -49,7 +49,7 @@ function Post({ item, isbookmark }) {
         async function(){
             try{
                 const res = await axios.get('/api/comments/'+item._id)
-                setcomments(res.data.comments)
+                setcomments(res.data.comments.reverse())
             }catch(err){
                 console.error(err)
             }
@@ -60,8 +60,9 @@ function Post({ item, isbookmark }) {
   const addComment = async () => {
       try{
         const res = await axios.post('/api/comments/add/'+ item._id, { commentData: { text: commentinput}}, config)
-        setcomments(res.data.comments)
+        setcomments(res.data.comments.reverse())
         setcommentinput('')
+        toastsuccess('Comment Added')
       }catch(err){
         console.error(err)
       }
@@ -70,8 +71,9 @@ function Post({ item, isbookmark }) {
   const editComment = async (data, id) => {
     try{
         const res = await axios.post('/api/comments/edit/'+ item._id + '/' + id, { commentData: data } , config)
-        setcomments(res.data.comments)
+        setcomments(res.data.comments.reverse())
         setcommentinput('')
+        toastsuccess('Comment Edited')
     }catch(err){
         console.error(err)
     }
@@ -80,7 +82,8 @@ function Post({ item, isbookmark }) {
   const deleteComment = async (id) => {
     try{
         const res = await axios.post('/api/comments/delete/'+ item._id + '/' + id, {} , config)
-        setcomments(res.data.comments)
+        setcomments(res.data.comments.reverse())
+        toastsuccess('Comment Deleted')
     }catch(err){
         console.error(err)
     }
@@ -127,9 +130,9 @@ function Post({ item, isbookmark }) {
                 />
             }
             action={
-                isbookmark ? null : (<IconButton onClick={handleClick}  aria-label="settings">
+                isbookmark ? null : (item.userId === user?.user?._id ? <IconButton onClick={handleClick}  aria-label="settings">
                     <MoreVert />
-                </IconButton>) 
+                </IconButton> : null) 
             }
             title={UserDetails?.FullName}
             subheader={FormattedDate(new Date(item?.createdAt))}
