@@ -1,47 +1,90 @@
 import { FavoriteBorder, Favorite, MoreVert, Share, ModeCommentOutlined, BookmarkBorderOutlined, Bookmark } from "@mui/icons-material";
-import {
-  Avatar,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Menu, MenuItem, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddBookmarks, DeleteBookmarks } from "../../redux/features/Bookmarks/Bookmarks";
 import { DeletePost, DisLikePost, LikePost } from "../../redux/features/Posts/PostsSlice";
-import { FormattedDate } from "../../Utilities";
-import { EditPostModal } from '../EditPostModal/EditPostModal'
+import { CheckIdinArray, FormattedDate } from "../../Utilities";
+import { Comment } from "../Comment/Comment";
+import { EditPostModal } from '../EditPostModal/EditPostModal';
 
 function Post({ item, isbookmark }) {
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
 
   const [UserDetails, setUserDetails] = useState({})
   const [openModal, setopenModal] = useState(false)
+  const [showComments, setshowComments] = useState(false)
+  const [comments, setcomments] = useState([])
+  const [commentinput, setcommentinput] = useState('')
 
   const { user, bookmarks } = useSelector(state => state)
 
   const dispatch = useDispatch()
 
+  const config = {
+    headers: {
+      authorization: user.token,
+    }
+  }
+
   useEffect(()=>{
     (
-        function(){
-            axios
-                .get('/api/users/'+item.userId)
-                .then(response => setUserDetails(response.data.user))
+        async function(){
+            try{
+                const res = await axios.get('/api/users/'+item.userId)
+                setUserDetails(res.data.user)
+            }catch(err){
+                console.error(err)
+            }
         }
     )()
   }, [])
 
+  useEffect(()=>{
+    (
+        async function(){
+            try{
+                const res = await axios.get('/api/comments/'+item._id)
+                setcomments(res.data.comments)
+            }catch(err){
+                console.error(err)
+            }
+        }
+    )()
+  }, [])
+
+  const addComment = async () => {
+      try{
+        const res = await axios.post('/api/comments/add/'+ item._id, { commentData: { text: commentinput}}, config)
+        setcomments(res.data.comments)
+        setcommentinput('')
+      }catch(err){
+        console.error(err)
+      }
+  }
+
+  const editComment = async (data, id) => {
+    try{
+        const res = await axios.post('/api/comments/edit/'+ item._id + '/' + id, { commentData: data } , config)
+        setcomments(res.data.comments)
+        setcommentinput('')
+    }catch(err){
+        console.error(err)
+    }
+  }
+
+  const deleteComment = async (id) => {
+    try{
+        const res = await axios.post('/api/comments/delete/'+ item._id + '/' + id, {} , config)
+        setcomments(res.data.comments)
+    }catch(err){
+        console.error(err)
+    }
+  }
   const handleDisLike = () => {
       dispatch(DisLikePost({id: item._id, token: user.token}))
     }
@@ -68,31 +111,9 @@ function Post({ item, isbookmark }) {
      handleClose()
   }
 
-  const CheckLikedPost = (likes, id) => {
-    let isLiked = false
-    likes.forEach(element => {
-        if(element._id === id){
-            isLiked = true
-            return
-        }
-    });
+  const isLiked = CheckIdinArray(item.likes.likedBy, user.user._id)
 
-    return isLiked
-  }
-
-  const CheckBookmarked = (bookmarks, id) => {
-    let isBookmarked = false
-    bookmarks.forEach(element => {
-        if(element._id === id){
-            isBookmarked = true
-        }
-    });
-    return isBookmarked
-  }
-
-  const isLiked = CheckLikedPost(item.likes.likedBy, user.user._id)
-
-  const isBookmarked = CheckBookmarked(bookmarks?.posts, item._id)
+  const isBookmarked = CheckIdinArray(bookmarks?.posts, item._id)
 
   return (
     <Card sx={{ margin: {
@@ -131,7 +152,7 @@ function Post({ item, isbookmark }) {
                 </IconButton>) : (<IconButton onClick={handleLike} aria-label="add to favorites">
                     <FavoriteBorder />
                 </IconButton>) }
-                <IconButton aria-label="comment">
+                <IconButton onClick={() => setshowComments( prev => !prev)} aria-label="comment">
                     <ModeCommentOutlined />
                 </IconButton>
                 <IconButton aria-label="share">
@@ -144,6 +165,25 @@ function Post({ item, isbookmark }) {
                 </IconButton> ) }
             </Box>
         </CardActions>
+        { showComments ? <Box>
+                <Box p={2} sx={{ display: 'flex'}}>
+                    <Box>
+                        <Avatar />
+                    </Box>
+                    <Box ml={2} sx={{ flexGrow: 1}}>
+                        <TextField 
+                        value={commentinput} 
+                        onChange={(e) => setcommentinput(e.target.value)} 
+                        sx={{ width: '100%'}} 
+                        id="standard-basic" 
+                        variant="standard" />
+                    </Box>
+                    <Button onClick={addComment}>Add</Button>
+                </Box>
+                <Box>
+                { comments?.map((comment) => <Comment key={comment._id} comment={comment} editComment={editComment} deleteComment={deleteComment} />)}
+                </Box>
+        </Box> : null}
         <Menu
             id="basic-menu"
             open={open}

@@ -1,4 +1,5 @@
 export * from './GlobalStyles/GlobalStyles'
 export * from './DateUtils'
 export * from './ToastMessage'
+export * from './PostUtils'
 export {getDesignTokens} from './theme'

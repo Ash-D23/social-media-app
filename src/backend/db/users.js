@@ -16,4 +16,14 @@ export const users = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+  {
+    _id: '0af3d380-4d9e-4b80-88af-b0a59483de44',
+    firstName: "Abbas",
+    lastName: "Mustan",
+    FullName: 'Abbas Mustan',
+    username: "abbasmustan",
+    password: "adarshBalika123",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
 ];

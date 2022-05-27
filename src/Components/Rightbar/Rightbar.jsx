@@ -1,15 +1,37 @@
 import {
-  Avatar,
-  AvatarGroup,
   Box,
   ImageList,
   ImageListItem,
   Typography,
 } from "@mui/material";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { CheckIdinArray } from "../../Utilities";
 import { FollowPeople } from "../FollowPeople/FollowPeople";
 
 const Rightbar = () => {
+
+  const [Users, setUsers] = useState([])
+  const { user } = useSelector(state => state.user)
+
+  useEffect(()=>{
+    (async function(){
+      const res = await axios.get('/api/users')
+      setUsers(res.data.users)
+    })()
+  }, [])
+
+  const filteredUsers = Users.filter((userDetails) => {
+    if(userDetails._id === user._id){
+      return false
+    }
+    if(CheckIdinArray(user.following, userDetails._id)){
+      return false
+    }
+    return true
+  })
+
   return (
     <Box flex={2} p={2} sx={{ display: { xs: "none", lg: "block" } }}>
       <Box position="fixed" width={350}>
@@ -40,10 +62,9 @@ const Rightbar = () => {
           People you may Know
         </Typography>
         <Box>
-          <FollowPeople />
-          <FollowPeople />
-          <FollowPeople />
-          <FollowPeople />
+          { filteredUsers.slice(0,5)?.map((userDetails) => {
+            return <FollowPeople key={userDetails._id} userDetails={userDetails} />
+          })}
         </Box>
       </Box>
     </Box>
