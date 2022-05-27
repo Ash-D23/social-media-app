@@ -17,7 +17,7 @@ function Profile() {
 
   useEffect(()=>{
     dispatch(fetchProfile(params.id))
-  }, [])
+  }, [params.id])
 
   const UserDetails = profile?.profile?.user
 
@@ -35,9 +35,9 @@ function Profile() {
 
   const UserPosts = filterPostsByID(params.id)
 
-  const followers = UserDetails?.following?.length || 0
+  const followers = UserDetails?.followers?.length || 0
 
-  const following = UserDetails?.followers?.length || 0
+  const following = UserDetails?.following?.length || 0
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { toastsuccess } from '../../../Utilities/ToastMessage'
+import { FollowUser, UnFollowUser } from '../User/UserSlice'
 
 const initialState = {
   profile: null,
@@ -58,6 +59,22 @@ const ProfileSlice = createSlice({
     builder.addCase(EditProfile.rejected, (state, action) => {
       state.loading = false
       state.error = action.error.message
+    })
+    builder.addCase(FollowUser.fulfilled, (state, action) => {
+      if(state.profile?.user._id === action.payload.followUser._id){
+        state.profile.user = action.payload.followUser
+      }
+      if(state.profile?.user._id === action.payload.user._id){
+        state.profile.user = action.payload.user
+      }
+    })
+    builder.addCase(UnFollowUser.fulfilled, (state, action) => {
+      if(state.profile.user._id === action.payload.followUser._id){
+        state.profile.user = action.payload.followUser
+      }
+      if(state.profile?.user._id === action.payload.user._id){
+        state.profile.user = action.payload.user
+      }
     })
   }
 })
