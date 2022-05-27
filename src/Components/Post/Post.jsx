@@ -42,6 +42,14 @@ function Post({ item, isbookmark }) {
     )()
   }, [])
 
+  const handleDisLike = () => {
+      dispatch(DisLikePost({id: item._id, token: user.token}))
+    }
+
+  const handleLike = () => {
+      dispatch(LikePost({ id: item._id, token: user.token}))
+    }
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -118,9 +126,9 @@ function Post({ item, isbookmark }) {
         </CardContent>
         <CardActions disableSpacing>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%'}}>
-                { isLiked ? (<IconButton onClick={()=> dispatch(DisLikePost({id: item._id, token: user.token}))} aria-label="add to favorites">
+                { isLiked ? (<IconButton onClick={handleDisLike} aria-label="add to favorites">
                     <Favorite sx={{ color: "red"}} />
-                </IconButton>) : (<IconButton onClick={() => dispatch(LikePost({ id: item._id, token: user.token}))} aria-label="add to favorites">
+                </IconButton>) : (<IconButton onClick={handleLike} aria-label="add to favorites">
                     <FavoriteBorder />
                 </IconButton>) }
                 <IconButton aria-label="comment">
