@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Button, Link, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Feed, EditProfileModal } from '../../Components'
 import { AvatarStyles, ImgStyles, ProfileContainer } from './styles'
@@ -43,7 +43,10 @@ function Profile() {
               <Typography variant="p">{`@${UserDetails?.username}`}</Typography>
             </Box>
             <Box mt={2}>
-              <Typography variant="p">Bio</Typography>
+              <Typography variant="p">{UserDetails?.Bio}</Typography>
+            </Box>
+            <Box mt={2}>
+              <Link href={UserDetails?.Url}>{UserDetails?.Url}</Link>
             </Box>
             <Stack mt={2} direction="row" spacing={2}>
               <Typography>500 Followers</Typography>
