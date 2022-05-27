@@ -27,9 +27,14 @@ React JS, Redux, Material UI
 ### Features
 
 * Home Page
-* Feed Page
-* Profile Page
-* Explore Feed
+* Dashboard (Feed) Page
+* Create Post (text and image-based)
+* Profile Page with Edit profile Feature
+* Explore Page with trending and latest filters
 * Bookmark Post
-* Notifications Page
+* Edit & Delete a Post
+* Like/Unlike like a post
+* Comment on a a post
+* Follow/UnFollow a User
 * Authentication : Login, Signup, Logout
+* Mobile Responsiveness
