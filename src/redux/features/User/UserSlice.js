@@ -20,6 +20,26 @@ export const signUp = createAsyncThunk('user/SignUp', (data) => {
     .then(response => response.data)
 })
 
+export const FollowUser = createAsyncThunk('user/FollowUser', (data) => {
+  return axios
+    .post('/api/users/follow/'+data._id, { },  {
+      headers: {
+        authorization: data.token,
+      }
+    })
+    .then(response => response.data)
+})
+
+export const UnFollowUser = createAsyncThunk('user/UnFollowUser', (data) => {
+  return axios
+    .post('/api/users/unfollow/'+data._id, { },  {
+      headers: {
+        authorization: data.token,
+      }
+    })
+    .then(response => response.data)
+})
+
 const UserSlice = createSlice({
   name: 'user',
   initialState,
@@ -70,6 +90,24 @@ const UserSlice = createSlice({
     })
     builder.addCase(EditProfile.fulfilled, (state, action) => {
       state.user = action.payload.user
+    })
+    builder.addCase(FollowUser.fulfilled, (state, action) => {
+      state.loading = false
+      state.user = action.payload.user
+      state.error = ''
+    })
+    builder.addCase(FollowUser.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    })
+    builder.addCase(UnFollowUser.fulfilled, (state, action) => {
+      state.loading = false
+      state.user = action.payload.user
+      state.error = ''
+    })
+    builder.addCase(UnFollowUser.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message
     })
   }
 })

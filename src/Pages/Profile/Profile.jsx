@@ -5,12 +5,14 @@ import { AvatarStyles, ImgStyles, ProfileContainer } from './styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchProfile, fetchUserPosts } from '../../redux/features/Profile/ProfileSlice'
 import { useParams } from 'react-router-dom'
+import { CheckIdinArray } from '../../Utilities'
+import { FollowUser, UnFollowUser } from '../../redux/features/User/UserSlice'
 
 function Profile() {
   const [open, setopen] = useState(false)
   const dispatch = useDispatch()
 
-  const { profile, posts } = useSelector(state => state)
+  const { profile, posts, user } = useSelector(state => state)
   const params = useParams()
 
   useEffect(()=>{
@@ -19,8 +21,16 @@ function Profile() {
 
   const UserDetails = profile?.profile?.user
 
+  const handleFollow = () => {
+    dispatch(FollowUser({ _id: UserDetails._id, token: user.token}))
+  }
+
+  const handleUnFollow = () => {
+    dispatch(UnFollowUser({ _id: UserDetails._id, token: user.token}))
+  }
+
   const filterPostsByID = (id) => {
-      return posts?.posts?.posts?.filter((item) => item.userId === id)
+    return posts?.posts?.posts?.filter((item) => item.userId === id)
   }
 
   const UserPosts = filterPostsByID(params.id)
@@ -33,9 +43,11 @@ function Profile() {
               <img style={ImgStyles} src={UserDetails?.coverImg || 'https://images.unsplash.com/photo-1473116763249-2faaef81ccda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1196&q=80'} alt="cover" />
               <Avatar src={UserDetails?.img || null} sx={AvatarStyles}/>
             </Box>
-            <Box m={2} sx={{ display: 'flex', justifyContent: 'flex-end'}}>
+            { user?.user?._id === UserDetails?._id ? <Box m={2} sx={{ display: 'flex', justifyContent: 'flex-end'}}>
               <Button onClick={()=>setopen(true)} variant="outlined">Edit</Button>
-            </Box>
+            </Box> :  <Box m={2} sx={{ display: 'flex', justifyContent: 'flex-end'}}>
+              { CheckIdinArray(user?.user?.following || [], UserDetails?._id) ? <Button onClick={handleUnFollow} variant="outlined">UnFollow</Button> : <Button onClick={handleFollow} variant="outlined">Follow</Button> }
+            </Box>}
           </Box>
           <Box ml={3} pb={2}>
             <Box >

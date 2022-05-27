@@ -1,6 +1,4 @@
 import {
-  Avatar,
-  AvatarGroup,
   Box,
   ImageList,
   ImageListItem,
@@ -9,6 +7,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { CheckIdinArray } from "../../Utilities";
 import { FollowPeople } from "../FollowPeople/FollowPeople";
 
 const Rightbar = () => {
@@ -57,7 +56,10 @@ const Rightbar = () => {
             if(userDetails._id === user._id){
               return null
             }
-            return <FollowPeople user={userDetails} />
+            if(CheckIdinArray(user.following, userDetails._id)){
+              return null
+            }
+            return <FollowPeople key={userDetails._id} userDetails={userDetails} />
           })}
         </Box>
       </Box>
