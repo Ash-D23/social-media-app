@@ -1,11 +1,11 @@
 import { Avatar, Box, Button, Link, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { Feed, EditProfileModal } from '../../Components'
+import { Feed, EditProfileModal, LoaderOverlay } from '../../Components'
 import { AvatarStyles, ImgStyles, ProfileContainer } from './styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchProfile, fetchUserPosts } from '../../redux/features/Profile/ProfileSlice'
 import { useParams } from 'react-router-dom'
-import { CheckIdinArray } from '../../Utilities'
+import { CheckIdinArray, FlexCenterBox } from '../../Utilities'
 import { FollowUser, UnFollowUser } from '../../redux/features/User/UserSlice'
 
 function Profile() {
@@ -71,6 +71,12 @@ function Profile() {
           </Box>
       </ProfileContainer>
       <Feed posts={UserPosts} />
+      { profile?.loading ? <LoaderOverlay /> : null }
+      {UserPosts?.length === 0 ? (
+        <FlexCenterBox mt={3} p={2} >
+          <img style={{ height: '75vh'}} src="/Images/empty.svg" />
+        </FlexCenterBox>
+      ) : null}
       { open ? <EditProfileModal open={open} setopen={setopen} /> : null }
     </>
   )
