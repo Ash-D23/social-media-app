@@ -35,6 +35,10 @@ function Profile() {
 
   const UserPosts = filterPostsByID(params.id)
 
+  const followers = UserDetails?.following?.length || 0
+
+  const following = UserDetails?.followers?.length || 0
+
   return (
     <>
       <ProfileContainer>
@@ -61,8 +65,8 @@ function Profile() {
               <Link href={UserDetails?.Url}>{UserDetails?.Url}</Link>
             </Box>
             <Stack mt={2} direction="row" spacing={2}>
-              <Typography>500 Followers</Typography>
-              <Typography>200 Following</Typography>
+              <Typography>{`${followers} Followers`}</Typography>
+              <Typography>{`${following} Following`}</Typography>
             </Stack>
           </Box>
       </ProfileContainer>
